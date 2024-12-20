@@ -5,6 +5,7 @@ import { Box, createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { useState } from 'react';
 import Footer from './components/Footer';
 import YearAttacks from './components/charts/YearAttacks';
+import AttackType from './components/charts/AttackType';
 
 function App() {
   const [mode, setMode] = useState<'light' | 'dark'>('light');
@@ -71,6 +72,7 @@ function App() {
             <Routes>
               <Route path='/' element={<Home/>}/>
               <Route path='/yearCharts' element={<YearAttacks/>}/>
+              <Route path='/attackTypes' element={<AttackType/>}/>
             </Routes>
           <Footer setMode={setMode}/>
         </BrowserRouter>
