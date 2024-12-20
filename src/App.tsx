@@ -12,7 +12,7 @@ function App() {
   const theme = createTheme({
     palette: {
       primary: {
-        main: mode === 'light' ?  'rgb(139, 255, 255)' : 'rgb(113, 182, 182)',
+        main: mode === 'light' ?  'rgb(124, 236, 236)' : 'rgb(113, 182, 182)',
         light: '#2196f3',
         dark: '#1565c0',
       },
