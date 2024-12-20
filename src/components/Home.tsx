@@ -2,6 +2,7 @@ import { Box, Typography, Button, Container, Grid, Card, CardContent, CardMedia,
 import { styled } from '@mui/system';
 import { useState } from 'react';
 import image from '../../public/weapons.webp';
+import { NavLink } from 'react-router-dom';
 
 const CustomCard = styled(Card)({
   maxWidth: 345,
@@ -84,22 +85,24 @@ const Home = () => {
           </Grid>
 
           <Grid item xs={12} sm={6} md={4}>
-            <CustomCard>
-              <CardMedia
-                component="img"
-                alt="ההיסטוריה של הפיגועים"
-                height="300"
-                image='../../public/6b31379d-ce60-4331-b56a-bb4fa347c565.webp'
-              />
-              <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  ההיסטוריה של הפיגועים
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  סקירה כללית על פיגועים מרכזיים וההשלכות שלהם על החברה והביטחון בישראל.
-                </Typography>
-              </CardContent>
-            </CustomCard>
+            <NavLink style={{ textDecoration: 'none' }} to="/yearCharts">
+              <CustomCard>
+                  <CardMedia
+                    component="img"
+                    alt="ההיסטוריה של הפיגועים"
+                    height="300"
+                    image='../../public/6b31379d-ce60-4331-b56a-bb4fa347c565.webp'
+                  />
+                  <CardContent>
+                    <Typography variant="h6" gutterBottom>
+                      ההיסטוריה של הפיגועים
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      סקירה כללית על פיגועים מרכזיים וההשלכות שלהם על החברה והביטחון בישראל.
+                    </Typography>
+                  </CardContent>
+                </CustomCard>
+            </NavLink>
           </Grid>
         </Grid>
 

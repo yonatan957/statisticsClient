@@ -1,13 +1,12 @@
 import { Route,BrowserRouter, Routes } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Home from './components/Home';
-import { Box, createTheme, CssBaseline, Switch, ThemeProvider } from '@mui/material';
+import { Box, createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { useState } from 'react';
 import Footer from './components/Footer';
+import YearAttacks from './components/charts/YearAttacks';
 
 function App() {
-  const label = { inputProps: { 'aria-label': 'Switch demo' } };
-
   const [mode, setMode] = useState<'light' | 'dark'>('light');
   const theme = createTheme({
     palette: {
@@ -71,6 +70,7 @@ function App() {
           <NavBar/>
             <Routes>
               <Route path='/' element={<Home/>}/>
+              <Route path='/yearCharts' element={<YearAttacks/>}/>
             </Routes>
           <Footer setMode={setMode}/>
         </BrowserRouter>
