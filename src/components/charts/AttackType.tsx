@@ -13,7 +13,7 @@ export default function AttackTypeStats() {
   const [data, setData] = useState<IAttackType[]>([]);
   const [loading, setLoading] = useState(false);
   const [pieChecked, setPieChecked] = useState(true);
-  const [barChecked, setBarChecked] = useState(false);
+  const [barChecked, setBarChecked] = useState(true);
   const [viewMode, setViewMode] = useState<"kill" | "wound">("kill");
 
   useEffect(() => {

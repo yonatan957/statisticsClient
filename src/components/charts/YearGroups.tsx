@@ -11,6 +11,7 @@ import {
   FormGroup,
   Snackbar,
   Alert,
+  Typography,
 } from "@mui/material";
 import { BarChart } from "@mui/x-charts";
 
@@ -26,7 +27,7 @@ export default function YearGroups() {
   const [loading, setLoading] = useState(false);
   const [pieChecked, setPieChecked] = useState(true);
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [barChecked, setBarChecked] = useState(false);
+  const [barChecked, setBarChecked] = useState(true);
   const barData = data.map((item) => item.count);
   const barLabels = data.map((item) => item.gname);
   const fetchData = async () => {
@@ -34,7 +35,11 @@ export default function YearGroups() {
       setLoading(true);
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BASE_URL}/api/relationships/groups-by-year?year=${year}${amount? `&amount=${amount}` : ""}`
+          `${
+            import.meta.env.VITE_BASE_URL
+          }/api/relationships/groups-by-year?year=${year}${
+            amount ? `&amount=${amount}` : ""
+          }`
         );
         const data = await response.json();
         setData(data);
@@ -80,6 +85,23 @@ export default function YearGroups() {
 
   return (
     <Box sx={{ maxWidth: "100%", margin: "0 auto", padding: 2 }}>
+      <Box sx={{ marginBottom: 4 }}>
+        <Typography variant="h3" gutterBottom>
+          ארגונים חזקים לפי שנה
+        </Typography>
+        <Typography variant="body1" paragraph>
+          בדף זה תוכלו לבחור שנה ומספר של ארגונים, ולקבל את הארגונים החזקים
+          ביותר לפי הכמות שלהם בשנה שבחרתם. בחרו שנה מהרשימה ולאחר מכן קבעו את
+          מספר הארגונים שברצונכם לראות.
+        </Typography>
+      </Box>
+
+      <Box sx={{ marginBottom: 4 }}>
+        <Typography variant="body2" sx={{ color: "text.secondary" }}>
+          בחרו שנה , הגדירו את מספר הארגונים שברצונכם לראות ולאחר מכן לחצו על
+          "הצג את הארגונים".
+        </Typography>
+      </Box>
       <form onSubmit={handleSubmit}>
         <Box
           sx={{
@@ -105,7 +127,7 @@ export default function YearGroups() {
           />
         </Box>
         <Button type="submit" variant="contained" color="primary" fullWidth>
-          הצג תוצאות
+          הצג את הארגונים
         </Button>
       </form>
 
@@ -117,6 +139,11 @@ export default function YearGroups() {
 
       {data.length > 0 && (
         <Box sx={{ marginTop: 3 }}>
+          <Box sx={{ marginTop: 4 }}>
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+              בחרו את הגרפים שברצונכם לראות
+            </Typography>
+          </Box>
           <FormGroup
             sx={{
               marginBottom: 3,

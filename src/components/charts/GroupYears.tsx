@@ -13,6 +13,7 @@ import {
   SelectChangeEvent,
   Snackbar,
   TextField,
+  Typography,
 } from "@mui/material";
 import { LineChart, PieChart } from "@mui/x-charts";
 import React, { useEffect, useState } from "react";
@@ -46,7 +47,9 @@ export default function GroupYears() {
       setLoading(true);
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BASE_URL}/api/relationships/groups-by-year?groupName=${selectedGroup}`
+          `${
+            import.meta.env.VITE_BASE_URL
+          }/api/relationships/groups-by-year?groupName=${selectedGroup}`
         );
         const data = await response.json();
         setData(data);
@@ -74,7 +77,9 @@ export default function GroupYears() {
         setGroups([]);
         return;
       }
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/grouplist`);
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/api/grouplist`
+      );
       const data = await response.json();
       const filteredGroups = searchTerm
         ? data.filter((group: string) =>
@@ -124,6 +129,22 @@ export default function GroupYears() {
   };
   return (
     <Box sx={{ maxWidth: "100%", margin: "0 auto", padding: 2 }}>
+      <Box sx={{ marginBottom: 4 }}>
+        <Typography variant="h3" gutterBottom>
+          סטטיסטיקות שנים לפי קבוצה
+        </Typography>
+        <Typography variant="body1" paragraph>
+          בדף זה מוצגים נתונים חשובים לגבי סוגי התקפות וההשפעה שלהם על הרוגים
+          ופצועים בכל העולם. הקלידו את שם הקבוצה ובחרו מתוך הרשימה כדי לקבל
+          תובנות ברורות ומעמיקות על הנתונים שלה לאורך השנים.
+        </Typography>
+      </Box>
+
+      <Box sx={{ marginBottom: 4 }}>
+        <Typography variant="body2" sx={{ color: "text.secondary" }}>
+          בחרו קבוצה מתוך הרשימה ולאחר מכן לחצו על "הצג נתונים".
+        </Typography>
+      </Box>
       <form onSubmit={handleSubmit}>
         <Box
           sx={{
@@ -161,7 +182,7 @@ export default function GroupYears() {
           </FormControl>
         </Box>
         <Button type="submit" variant="contained" color="primary" fullWidth>
-          הצג תוצאות
+          הצג נתונים
         </Button>
       </form>
 
@@ -172,6 +193,11 @@ export default function GroupYears() {
       )}
       {data.length > 0 && (
         <Box sx={{ marginTop: 3 }}>
+          <Box sx={{ marginTop: 4 }}>
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+              בחרו את הגרפים שברצונכם לראות
+            </Typography>
+          </Box>
           <FormGroup
             sx={{
               marginBottom: 3,

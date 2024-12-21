@@ -2,7 +2,7 @@ import * as React from 'react';
 import { PieChart } from '@mui/x-charts/PieChart';
 import { LineChart } from '@mui/x-charts/LineChart';
 import { useState } from 'react';
-import { TextField, Button, Box, CircularProgress, FormControlLabel, Checkbox, FormGroup, Snackbar, Alert, RadioGroup, Radio } from '@mui/material';
+import { TextField, Button, Box, CircularProgress, FormControlLabel, Checkbox, FormGroup, Snackbar, Alert, RadioGroup, Radio, Typography } from '@mui/material';
 
 interface IyearAttacks {
   year: number;
@@ -84,6 +84,22 @@ export default function YearAttacks() {
 
   return (
     <Box sx={{ maxWidth: '100%', margin: '0 auto', padding: 2 }}>
+      <Box sx={{ marginBottom: 4 }}>
+        <Typography variant="h3" gutterBottom>
+          תקיפות לפי טווח שנים
+        </Typography>
+        <Typography variant="body1" paragraph>
+          בדף זה תוכלו לבחור טווח שנים, ולקבל מידע על התקיפות שבוצעו בכל שנה
+          בטווח הזה. בחרו את שנת ההתחלה ושנת הסיום, ולאחר מכן תוכלו לראות את
+          התקיפות שבוצעו בכל שנה בנפרד.
+        </Typography>
+      </Box>
+
+      <Box sx={{ marginBottom: 4 }}>
+        <Typography variant="body2" sx={{ color: "text.secondary" }}>
+          בחרו את שנת ההתחלה ושנת הסיום, ולאחר מכן לחצו על "הצג תוצאות".
+        </Typography>
+      </Box>
       <form onSubmit={handleSubmit}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: 2 }}>
           <TextField
@@ -116,6 +132,11 @@ export default function YearAttacks() {
 
       {data.length > 0 && 
         <Box sx={{ marginTop: 3 }}>
+          <Box sx={{ marginTop: 4 }}>
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+              בחרו את הגרפים שברצונכם לראות
+            </Typography>
+          </Box>
           <FormGroup sx={{
               marginBottom: 3,
               display: { xs: "none", sm: "block" },
@@ -141,7 +162,11 @@ export default function YearAttacks() {
               label="Line Chart"
             />
           </FormGroup>
-
+            <Box sx={{ marginTop: 4 }}>
+              <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                בחרו את סוג הנתונים שברצונכם לראות              
+              </Typography>
+            </Box>
           <RadioGroup 
               row value={viewMode}
               onChange={(e) => setViewMode(e.target.value as "kill" | "wound")}
