@@ -2,7 +2,7 @@ import * as React from 'react';
 import { PieChart } from '@mui/x-charts/PieChart';
 import { LineChart } from '@mui/x-charts/LineChart';
 import { useState } from 'react';
-import { TextField, Button, Box, CircularProgress, FormControlLabel, Checkbox, FormGroup, Snackbar, Alert } from '@mui/material';
+import { TextField, Button, Box, CircularProgress, FormControlLabel, Checkbox, FormGroup, Snackbar, Alert, RadioGroup, Radio } from '@mui/material';
 
 interface IyearAttacks {
   year: number;
@@ -12,13 +12,14 @@ interface IyearAttacks {
 }
 
 export default function YearAttacks() {
-  const [startYear, setStartYear] = useState<number | ''>('');
-  const [endYear, setEndYear] = useState<number | ''>('');
+  const [startYear, setStartYear] = useState<number>(0);
+  const [endYear, setEndYear] = useState<number>(0);
   const [data, setData] = useState<IyearAttacks[]>([]);
   const [loading, setLoading] = useState(false);
-  const [pieChecked, setPieChecked] = useState(true); // סטטוס של ה-Pie Chart
-  const [lineChecked, setLineChecked] = useState(true); // סטטוס של ה-Line Chart
-  const [openSnackbar, setOpenSnackbar] = useState(false); // סטטוס של Snackbar (הודעה למשתמש)
+  const [pieChecked, setPieChecked] = useState(true); 
+  const [lineChecked, setLineChecked] = useState(true);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [viewMode, setViewMode] = useState<"kill" | "wound"| "attacks">("kill");
 
   const fetchData = async () => {
     if (startYear && endYear) {
@@ -37,14 +38,10 @@ export default function YearAttacks() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    // אם לא הוזנה שנה אחרונה, נשלח את השנה הראשונה כשנה אחרונה
     if (!endYear) {
       setEndYear(startYear);
     }
-
     if (!startYear) {
-      // אם לא הוזנה שנה התחלה, מציגים את ההודעה
       setOpenSnackbar(true);
     } else {
       setData([]);
@@ -54,22 +51,20 @@ export default function YearAttacks() {
 
   const pieData = data.map(item => ({
     label: `${item.year}`,
-    value: item.count,
+    value: viewMode === "kill" ? item.countKill : viewMode === "wound" ? item.countWound : item.count,
   }));
 
-  const lineData = data.map(item => item.count);
-
-  // הגדרת פרמטרים של הגרף בצורה של אובייקטים
+  const lineData = data.map(item => viewMode === "kill" ? item.countKill : viewMode === "wound" ? item.countWound : item.count);
   const pieChartConfig = {
     series: [
       {
-        innerRadius: 50,  // רדיוס פנימי
-        outerRadius: 140, // רדיוס חיצוני
+        innerRadius: 50,
+        outerRadius: 140,
         data: pieData,
       },
     ],
-    width: 400,   // גודל רוחב
-    height: 300,  // גובה הגרף
+    width: 400,
+    height: 300,
     slotProps: {
       legend: { hidden: true },
     },
@@ -84,7 +79,7 @@ export default function YearAttacks() {
         data: lineData,
       },
     ],
-    width: lineChecked && !pieChecked ? 800 : 400,   // אם רק ה-Line נבחר, יוגדל לרוחב 800
+    width: lineChecked && !pieChecked ? 800 : 400,
     height: 300,
   };
 
@@ -120,10 +115,12 @@ export default function YearAttacks() {
         </Box>
       )}
 
-      {data.length > 0 && (
+      {data.length > 0 && 
         <Box sx={{ marginTop: 3 }}>
-          {/* אפשרויות בחירה להציג גרפים */}
-          <FormGroup sx={{ marginBottom: 3 }}>
+          <FormGroup sx={{
+              marginBottom: 3,
+              display: { xs: "none", sm: "block" },
+            }}>
             <FormControlLabel
               control={
                 <Checkbox
@@ -146,7 +143,28 @@ export default function YearAttacks() {
             />
           </FormGroup>
 
-          {/* הצגת הגרפים */}
+          <RadioGroup 
+              row value={viewMode}
+              onChange={(e) => setViewMode(e.target.value as "kill" | "wound")}
+              sx={{ marginBottom: 3 }}
+            >
+            <FormControlLabel
+              value="kill"
+              control={<Radio />}
+              label="הרוגים"
+            />
+            <FormControlLabel
+              value="wound"
+              control={<Radio />}
+              label="פצועים"
+            />
+            <FormControlLabel
+              value="count"
+              control={<Radio />}
+              label="תקריות"
+            />
+          </RadioGroup>
+
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             {pieChecked && (
               <Box sx={{ width: '48%' }}>
@@ -160,9 +178,8 @@ export default function YearAttacks() {
             )}
           </Box>
         </Box>
-      )}
+      }
 
-      {/* Snackbar להודעה על חוסר בהכנסת שנה התחלה */}
       <Snackbar
         open={openSnackbar}
         autoHideDuration={3000}

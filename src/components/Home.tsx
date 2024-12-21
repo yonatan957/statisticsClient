@@ -66,6 +66,7 @@ const Home = () => {
           </Grid>
 
           <Grid item xs={12} sm={6} md={4}>
+            <NavLink style={{ textDecoration: 'none' }} to="/attackTypes">
             <CustomCard>
               <CardMedia
                 component="img"
@@ -82,6 +83,7 @@ const Home = () => {
                 </Typography>
               </CardContent>
             </CustomCard>
+            </NavLink>
           </Grid>
 
           <Grid item xs={12} sm={6} md={4}>

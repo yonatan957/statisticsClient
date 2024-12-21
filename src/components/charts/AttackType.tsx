@@ -1,14 +1,7 @@
 import { BarChart } from "@mui/x-charts/BarChart";
 import { PieChart } from "@mui/x-charts/PieChart";
 import { useState, useEffect } from "react";
-import {
-  Box,
-  CircularProgress,
-  FormControlLabel,
-  Checkbox,
-  FormGroup,
-  Typography,
-} from "@mui/material";
+import {Box, CircularProgress, FormControlLabel, Checkbox, FormGroup, Typography, RadioGroup, Radio,} from "@mui/material";
 
 interface IAttackType {
   attacktype1_txt: string;
@@ -19,8 +12,9 @@ interface IAttackType {
 export default function AttackTypeStats() {
   const [data, setData] = useState<IAttackType[]>([]);
   const [loading, setLoading] = useState(false);
-  const [pieChecked, setPieChecked] = useState(true); // סטטוס של ה-Pie Chart
-  const [barChecked, setBarChecked] = useState(false); // סטטוס של ה-Bar Chart
+  const [pieChecked, setPieChecked] = useState(true);
+  const [barChecked, setBarChecked] = useState(false);
+  const [viewMode, setViewMode] = useState<"kill" | "wound">("kill");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,31 +34,31 @@ export default function AttackTypeStats() {
     fetchData();
   }, []);
 
-  const barData = data.map((item) => item.countKill); // כמות הרוגים בלבד עבור ה-BarChart
-  const barLabels = data.map((item) => item.attacktype1_txt); // שם סוגי התקפות עבור ה-BarChart
+  const barData = data.map((item) =>
+    viewMode === "kill" ? item.countKill : item.countWound
+  );
+  const barLabels = data.map((item) => item.attacktype1_txt);
 
-  // המרת נתוני הפאי כך שיתאימו למבנה הנתונים הדרוש לפאי
   const pieChartData = data.map((item) => ({
     label: item.attacktype1_txt,
-    value: item.countKill,
+    value: viewMode === "kill" ? item.countKill : item.countWound,
   }));
 
-  // עבור פאי, נתון הרוגים לפי סוג התקפה
   const pieChartConfig = {
     series: [
       {
-        innerRadius: 50, // רדיוס פנימי
-        outerRadius: 140, // רדיוס חיצוני
-        data: pieChartData, // הנתונים המותאמים
+        innerRadius: 50,
+        outerRadius: 140,
+        data: pieChartData,
       },
     ],
-    width: 400, // גודל רוחב
-    height: 300, // גובה הגרף
+    width: 400,
+    height: 300,
     slotProps: {
       legend: { hidden: true },
     },
-    cx: "50%", // מיקום מרכז הגרף
-    cy: "50%", // מיקום מרכז הגרף
+    cx: "50%",
+    cy: "50%",
   };
 
   return (
@@ -80,26 +74,15 @@ export default function AttackTypeStats() {
         </Typography>
         <Typography variant="body1" paragraph>
           בדף זה מוצגים נתונים חשובים לגבי סוגי התקפות וההשפעה שלהם על הרוגים
-          בכל העולם. הנתונים מציגים את סוגי הפיגועים הרבים שהתרחשו במהלך השנים,
-          תוך השוואה בין סוגי התקפות שונים, כמו פיצוצים, ירי, והתנקשויות.
-        </Typography>
-        <Typography variant="body1" paragraph>
-          בעזרת גרפים אינטראקטיביים, ניתן לצפות ולהשוות את כמות הרוגי התקפות
-          מסוגים שונים.
-        </Typography>
-        <Typography variant="body1" paragraph>
-          הנתונים נאספים ממקורות סטטיסטיים גלובליים ומשקפים את המגוון הרחב של
-          סוגי ההתקפות בכל העולם. כל גרף מאפשר לכם לקבל תמונה ברורה של הנתונים,
-          ולבצע ניתוחים מעמיקים יותר לגבי המגמות השונות.
+          ופצועים בכל העולם. בחרו את סוג המידע שברצונכם לראות כדי לקבל תובנות
+          ברורות ומעמיקות.
         </Typography>
       </Box>
 
       {data.length > 0 && (
         <Box sx={{ marginTop: 3 }}>
-          {/* אפשרויות בחירה להציג גרפים */}
-          <FormGroup sx={{ marginBottom: 3 }}>
-            <FormControlLabel
-              control={
+          <FormGroup sx={{marginBottom: 3, display: { xs: "none", sm: "block" },}}>
+            <FormControlLabel control={
                 <Checkbox
                   checked={pieChecked}
                   onChange={(e) => setPieChecked(e.target.checked)}
@@ -120,16 +103,44 @@ export default function AttackTypeStats() {
             />
           </FormGroup>
 
-          {/* הצגת הגרפים */}
-          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            {pieChecked && (
-              <Box sx={{ width: barChecked ? "48%" : "100%" }}>
-                <PieChart {...pieChartConfig} />
-              </Box>
-            )}
+          <RadioGroup row value={viewMode}
+            onChange={(e) => setViewMode(e.target.value as "kill" | "wound")}
+            sx={{ marginBottom: 3 }}
+          >
+            <FormControlLabel
+              value="kill"
+              control={<Radio />}
+              label="הרוגים"
+            />
+            <FormControlLabel
+              value="wound"
+              control={<Radio />}
+              label="פצועים"
+            />
+          </RadioGroup>
+
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              flexDirection: { xs: "column", sm: "row" },
+            }}
+          >
+            <Box
+              sx={{
+                width: { xs: "100%", sm: barChecked ? "48%" : "100%" },
+              }}
+            >
+              <PieChart {...pieChartConfig} />
+            </Box>
 
             {barChecked && (
-              <Box sx={{ width: pieChecked ? "48%" : "100%" }}>
+              <Box
+                sx={{
+                  width: { xs: "100%", sm: pieChecked ? "48%" : "100%" },
+                  display: { xs: "none", sm: "block" }, // הסתרת גרף עמודות במסכים קטנים
+                }}
+              >
                 <BarChart
                   xAxis={[{ scaleType: "band", data: barLabels }]}
                   series={[{ data: barData }]}
