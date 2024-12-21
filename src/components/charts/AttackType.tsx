@@ -126,19 +126,19 @@ export default function AttackTypeStats() {
               flexDirection: { xs: "column", sm: "row" },
             }}
           >
-            <Box
+            { pieChecked && <Box
               sx={{
                 width: { xs: "100%", sm: barChecked ? "48%" : "100%" },
               }}
             >
               <PieChart {...pieChartConfig} />
-            </Box>
+            </Box>}
 
             {barChecked && (
               <Box
                 sx={{
                   width: { xs: "100%", sm: pieChecked ? "48%" : "100%" },
-                  display: { xs: "none", sm: "block" }, // הסתרת גרף עמודות במסכים קטנים
+                  display: { xs: "none", sm: "block" },
                 }}
               >
                 <BarChart

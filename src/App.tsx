@@ -9,6 +9,7 @@ import AttackType from './components/charts/AttackType';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CreateIcon from '@mui/icons-material/Create';
+import YearGroups from './components/charts/yearGroups';
 
 function App() {
   const [mode, setMode] = useState<'light' | 'dark'>('light');
@@ -81,10 +82,11 @@ function App() {
               <Route path='/' element={<Home/>}/>
               <Route path='/yearCharts' element={<YearAttacks/>}/>
               <Route path='/attackTypes' element={<AttackType/>}/>
+              <Route path='/yearGroups' element={<YearGroups/>}></Route>
             </Routes>
             <SpeedDial
                 ariaLabel="SpeedDial basic example"
-                sx={{ position: 'absolute', bottom: 16, right: 16 }}
+                sx={{ position: 'fixed', bottom: 16, right: 16 }}
                 icon={<SpeedDialIcon />}
               >
                 {actions.map((action) => (

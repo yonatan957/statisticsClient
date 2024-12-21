@@ -103,6 +103,26 @@ const Home = () => {
                   </CardContent>
                 </CustomCard>
           </Grid>
+
+          <Grid item xs={12} sm={6} md={4}>
+          <NavLink style={{ textDecoration: 'none' }} to="/yearGroups">
+            <CustomCard>
+              <CardMedia
+                component="img"
+                height="300"
+                image= '../../public/yearGroups.webp'
+              />
+              <CardContent>
+                <Typography variant="h6" gutterBottom>
+                  פעילות ארגוני טרור לאורך השנים
+                 </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  הצגת נתונים לגבי מספר הפיגועים של קבוצות בעולם במהלך השנים האחרונות.
+                </Typography>
+              </CardContent>
+            </CustomCard>
+            </NavLink>
+          </Grid>
         </Grid>
 
         <Paper sx={{ marginTop: 4, marginBottom: 4, padding: '16px', borderRadius: '8px', boxShadow: 3, '&:hover': { boxShadow: 6 } }}>

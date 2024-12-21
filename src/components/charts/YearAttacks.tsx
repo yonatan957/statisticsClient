@@ -105,7 +105,7 @@ export default function YearAttacks() {
           />
         </Box>
         <Button type="submit" variant="contained" color="primary" fullWidth>
-          Fetch Data
+        הצג תוצאות
         </Button>
       </form>
 
