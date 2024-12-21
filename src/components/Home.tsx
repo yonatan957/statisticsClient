@@ -1,7 +1,6 @@
 import { Box, Typography, Button, Container, Grid, Card, CardContent, CardMedia, Snackbar, Paper } from '@mui/material';
 import { styled } from '@mui/system';
 import { useState } from 'react';
-import image from '../../public/weapons.webp';
 import { NavLink } from 'react-router-dom';
 
 const CustomCard = styled(Card)({
@@ -44,9 +43,9 @@ const Home = () => {
           </Typography>
         </Box>
 
-        {/* סטטיסטיקות מעניינות */}
         <Grid container spacing={1}>
           <Grid item xs={12} sm={6} md={4}>
+          <NavLink style={{ textDecoration: 'none' }} to="/yearCharts">
             <CustomCard>
               <CardMedia
                 component="img"
@@ -63,6 +62,7 @@ const Home = () => {
                 </Typography>
               </CardContent>
             </CustomCard>
+            </NavLink>
           </Grid>
 
           <Grid item xs={12} sm={6} md={4}>
@@ -79,7 +79,7 @@ const Home = () => {
                   מגמות ניתוח
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  ניתוח מגמות וסטטיסטיקות מתוך הפיגועים, כולל זמנים, מיקומים וסוגי הפיגועים.
+                  ניתוח מגמות וסטטיסטיקות מתוך הפיגועים, כולל סוגי הפיגועים.
                 </Typography>
               </CardContent>
             </CustomCard>
@@ -87,7 +87,6 @@ const Home = () => {
           </Grid>
 
           <Grid item xs={12} sm={6} md={4}>
-            <NavLink style={{ textDecoration: 'none' }} to="/yearCharts">
               <CustomCard>
                   <CardMedia
                     component="img"
@@ -100,11 +99,9 @@ const Home = () => {
                       ההיסטוריה של הפיגועים
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      סקירה כללית על פיגועים מרכזיים וההשלכות שלהם על החברה והביטחון בישראל.
-                    </Typography>
+                    סטטיסטיקות פיגועים לפי מיקומים בעולם: ניתוח גלובלי והשפעות אזוריות                    </Typography>
                   </CardContent>
                 </CustomCard>
-            </NavLink>
           </Grid>
         </Grid>
 
