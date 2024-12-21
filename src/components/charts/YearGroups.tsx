@@ -34,7 +34,7 @@ export default function YearGroups() {
       setLoading(true);
       try {
         const response = await fetch(
-          `http://localhost:3030/api/relationships/groups-by-year?year=${year}&amount=${amount}`
+          `${import.meta.env.VITE_BASE_URL}/api/relationships/groups-by-year?year=${year}${amount? `&amount=${amount}` : ""}`
         );
         const data = await response.json();
         setData(data);
@@ -165,8 +165,8 @@ export default function YearGroups() {
             {barChecked && (
               <Box
                 sx={{
-                  width: { xs: "100%", sm: pieChecked ? "48%" : "100%" },
-                  display: { xs: "none", sm: "block" },
+                  width: { xs: "150%", sm: pieChecked ? "48%" : "100%" },
+                  display: { sm: "none", md: "block" },
                 }}
               >
                 <BarChart

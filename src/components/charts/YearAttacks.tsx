@@ -25,7 +25,7 @@ export default function YearAttacks() {
     if (startYear && endYear) {
       setLoading(true);
       try {
-        const response = await fetch(`http://localhost:3030/api/analysis/incident-trends?year=${startYear}&endyear=${endYear}`);
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/analysis/incident-trends?year=${startYear}&endyear=${endYear}`);
         const data = await response.json();
         setData(data);
       } catch (error) {

@@ -21,7 +21,7 @@ export default function AttackTypeStats() {
       setLoading(true);
       try {
         const response = await fetch(
-          "http://localhost:3030/api/analysis/deadliest-attack-types"
+          `${import.meta.env.VITE_BASE_URL}/api/analysis/deadliest-attack-types`
         );
         const result = await response.json();
         setData(result);

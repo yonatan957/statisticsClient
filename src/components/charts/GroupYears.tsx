@@ -46,7 +46,7 @@ export default function GroupYears() {
       setLoading(true);
       try {
         const response = await fetch(
-          `http://localhost:3030/api/relationships/groups-by-year?groupName=${selectedGroup}`
+          `${import.meta.env.VITE_BASE_URL}/api/relationships/groups-by-year?groupName=${selectedGroup}`
         );
         const data = await response.json();
         setData(data);
@@ -74,7 +74,7 @@ export default function GroupYears() {
         setGroups([]);
         return;
       }
-      const response = await fetch("http://localhost:3030/list");
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/grouplist`);
       const data = await response.json();
       const filteredGroups = searchTerm
         ? data.filter((group: string) =>
