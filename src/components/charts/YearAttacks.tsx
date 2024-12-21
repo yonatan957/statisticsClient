@@ -54,7 +54,6 @@ export default function YearAttacks() {
     value: viewMode === "kill" ? item.countKill : viewMode === "wound" ? item.countWound : item.count,
   }));
 
-  const lineData = data.map(item => viewMode === "kill" ? item.countKill : viewMode === "wound" ? item.countWound : item.count);
   const pieChartConfig = {
     series: [
       {
@@ -68,15 +67,15 @@ export default function YearAttacks() {
     slotProps: {
       legend: { hidden: true },
     },
-    cx: '50%',    // מיקום מרכז הגרף
-    cy: '50%',    // מיקום מרכז הגרף
+    cx: '50%',
+    cy: '50%',
   };
 
   const lineChartConfig = {
     xAxis: [{ data: data.map(item => item.year) }],
     series: [
       {
-        data: lineData,
+        data: data.map(item => viewMode === "kill" ? item.countKill : viewMode === "wound" ? item.countWound : item.count),
       },
     ],
     width: lineChecked && !pieChecked ? 800 : 400,

@@ -1,8 +1,18 @@
-import * as React from 'react';
-import { PieChart } from '@mui/x-charts/PieChart';
-import { useState } from 'react';
-import { TextField, Button, Box, CircularProgress, FormControlLabel, Checkbox, FormGroup, Snackbar, Alert } from '@mui/material';
-import { BarChart } from '@mui/x-charts';
+import * as React from "react";
+import { PieChart } from "@mui/x-charts/PieChart";
+import { useState } from "react";
+import {
+  TextField,
+  Button,
+  Box,
+  CircularProgress,
+  FormControlLabel,
+  Checkbox,
+  FormGroup,
+  Snackbar,
+  Alert,
+} from "@mui/material";
+import { BarChart } from "@mui/x-charts";
 
 interface IyearGroups {
   gname: string;
@@ -17,8 +27,8 @@ export default function YearGroups() {
   const [pieChecked, setPieChecked] = useState(true);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [barChecked, setBarChecked] = useState(false);
-  const barData = data.map(item => item.count);
-  const barLabels = data.map(item => item.gname);
+  const barData = data.map((item) => item.count);
+  const barLabels = data.map((item) => item.gname);
   const fetchData = async () => {
     if (year) {
       setLoading(true);
@@ -46,7 +56,7 @@ export default function YearGroups() {
     }
   };
 
-  const pieData = data.map(item => ({
+  const pieData = data.map((item) => ({
     label: item.gname,
     value: item.count,
   }));
@@ -64,36 +74,43 @@ export default function YearGroups() {
     slotProps: {
       legend: { hidden: true },
     },
-    cx: '50%',
-    cy: '50%',
+    cx: "50%",
+    cy: "50%",
   };
 
   return (
-    <Box sx={{ maxWidth: '100%', margin: '0 auto', padding: 2 }}>
+    <Box sx={{ maxWidth: "100%", margin: "0 auto", padding: 2 }}>
       <form onSubmit={handleSubmit}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginBottom: 2,
+            gap: 1,
+          }}
+        >
           <TextField
             label="Year"
             type="number"
-            value={year || ''}
+            value={year || ""}
             onChange={(e) => setStartYear(Number(e.target.value))}
             fullWidth
           />
           <TextField
             label="Amount of groups"
             type="number"
-            value={amount || ''}
+            value={amount || ""}
             onChange={(e) => setAmount(Number(e.target.value))}
             fullWidth
           />
         </Box>
         <Button type="submit" variant="contained" color="primary" fullWidth>
-        הצג תוצאות
+          הצג תוצאות
         </Button>
       </form>
 
       {loading && (
-        <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
+        <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}>
           <CircularProgress />
         </Box>
       )}
@@ -116,7 +133,7 @@ export default function YearGroups() {
               }
               label="Pie Chart"
             />
-                        <FormControlLabel
+            <FormControlLabel
               control={
                 <Checkbox
                   checked={barChecked}
@@ -135,13 +152,15 @@ export default function YearGroups() {
               flexDirection: { xs: "column", sm: "row" },
             }}
           >
-            { pieChecked && <Box
-              sx={{
-                width: { xs: "100%", sm: barChecked ? "48%" : "100%" },
-              }}
-            >
-              <PieChart {...pieChartConfig} />
-            </Box>}
+            {pieChecked && (
+              <Box
+                sx={{
+                  width: { xs: "100%", sm: barChecked ? "48%" : "100%" },
+                }}
+              >
+                <PieChart {...pieChartConfig} />
+              </Box>
+            )}
 
             {barChecked && (
               <Box
@@ -167,7 +186,11 @@ export default function YearGroups() {
         autoHideDuration={3000}
         onClose={() => setOpenSnackbar(false)}
       >
-        <Alert onClose={() => setOpenSnackbar(false)} severity="warning" sx={{ width: '100%' }}>
+        <Alert
+          onClose={() => setOpenSnackbar(false)}
+          severity="warning"
+          sx={{ width: "100%" }}
+        >
           Please enter a start year.
         </Alert>
       </Snackbar>
