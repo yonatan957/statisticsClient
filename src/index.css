@@ -38,6 +38,6 @@
   width: 100vw;
   padding: 10px;
   display: flex;
-  justify-content: right;
+  justify-content: left;
   align-items: center;
 }

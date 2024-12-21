@@ -1,14 +1,22 @@
 import { Route,BrowserRouter, Routes } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Home from './components/Home';
-import { Box, createTheme, CssBaseline, ThemeProvider } from '@mui/material';
+import { Box, createTheme, CssBaseline, SpeedDial, SpeedDialAction, SpeedDialIcon, ThemeProvider } from '@mui/material';
 import { useState } from 'react';
 import Footer from './components/Footer';
 import YearAttacks from './components/charts/YearAttacks';
 import AttackType from './components/charts/AttackType';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CreateIcon from '@mui/icons-material/Create';
 
 function App() {
   const [mode, setMode] = useState<'light' | 'dark'>('light');
+  const actions = [
+    { icon: <AddIcon />, name: 'create', link: '/create' },
+    { icon: <DeleteIcon />, name: 'delete', link: '/delete' },
+    { icon: <CreateIcon />, name: 'update', link: '/update' },
+  ]
   const theme = createTheme({
     palette: {
       primary: {
@@ -74,6 +82,19 @@ function App() {
               <Route path='/yearCharts' element={<YearAttacks/>}/>
               <Route path='/attackTypes' element={<AttackType/>}/>
             </Routes>
+            <SpeedDial
+                ariaLabel="SpeedDial basic example"
+                sx={{ position: 'absolute', bottom: 16, right: 16 }}
+                icon={<SpeedDialIcon />}
+              >
+                {actions.map((action) => (
+                  <SpeedDialAction
+                    key={action.name}
+                    icon={action.icon}
+                    tooltipTitle={action.name}
+                  />
+                ))}
+            </SpeedDial>
           <Footer setMode={setMode}/>
         </BrowserRouter>
       </Box>
