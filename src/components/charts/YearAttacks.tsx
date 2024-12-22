@@ -3,6 +3,7 @@ import { PieChart } from '@mui/x-charts/PieChart';
 import { LineChart } from '@mui/x-charts/LineChart';
 import { useState } from 'react';
 import { TextField, Button, Box, CircularProgress, FormControlLabel, Checkbox, FormGroup, Snackbar, Alert, RadioGroup, Radio, Typography } from '@mui/material';
+import { socket } from '../../main';
 
 interface IyearAttacks {
   year: number;
@@ -20,7 +21,7 @@ export default function YearAttacks() {
   const [lineChecked, setLineChecked] = useState(true);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [viewMode, setViewMode] = useState<"kill" | "wound"| "attacks">("kill");
-
+  socket.on("eventUpdate", () => fetchData());
   const fetchData = async () => {
     if (startYear && endYear) {
       setLoading(true);

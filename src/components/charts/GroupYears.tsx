@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import { LineChart, PieChart } from "@mui/x-charts";
 import React, { useEffect, useState } from "react";
+import { socket } from "../../main";
 
 interface IgroupYears {
   year: number;
@@ -31,7 +32,7 @@ export default function GroupYears() {
   const [lineChecked, setLineChecked] = useState(true);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [data, setData] = useState<IgroupYears[]>([]);
-
+  socket.on("eventUpdate", () => fetchData());
   const handleChange = (event: SelectChangeEvent<string>) => {
     setSelectedGroup(event.target.value);
   };

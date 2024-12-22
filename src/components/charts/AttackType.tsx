@@ -2,6 +2,7 @@ import { BarChart } from "@mui/x-charts/BarChart";
 import { PieChart } from "@mui/x-charts/PieChart";
 import { useState, useEffect } from "react";
 import {Box, CircularProgress, FormControlLabel, Checkbox, FormGroup, Typography, RadioGroup, Radio,} from "@mui/material";
+import { socket } from "../../main";
 
 interface IAttackType {
   attacktype1_txt: string;
@@ -15,8 +16,11 @@ export default function AttackTypeStats() {
   const [pieChecked, setPieChecked] = useState(true);
   const [barChecked, setBarChecked] = useState(true);
   const [viewMode, setViewMode] = useState<"kill" | "wound">("kill");
-
+  socket.on("eventUpdate", () => fetchInitialData());
   useEffect(() => {
+    fetchInitialData();
+  }, []);
+  const fetchInitialData = async () => {
     const fetchData = async () => {
       setLoading(true);
       try {
@@ -32,8 +36,7 @@ export default function AttackTypeStats() {
       }
     };
     fetchData();
-  }, []);
-
+  }
   const barData = data.map((item) =>
     viewMode === "kill" ? item.countKill : item.countWound
   );

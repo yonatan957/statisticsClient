@@ -1,6 +1,7 @@
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Home from "./components/Home";
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   CssBaseline,
@@ -20,11 +21,12 @@ import YearGroups from "./components/charts/YearGroupsGeneral";
 import BasicMap from "./components/maps/CountryAttacks";
 import { createAppTheme } from "./theme";
 import CountryGroupsGeneral from "./components/CountryGroupsGeneral";
+import Create from "./components/updates/Create";
 
 function App() {
   const [mode, setMode] = useState<"light" | "dark">("light");
   const theme = createAppTheme(mode);
-
+  const navigate = useNavigate();
   const actions = [
     { icon: <AddIcon />, name: "create", link: "/create" },
     { icon: <DeleteIcon />, name: "delete", link: "/delete" },
@@ -37,15 +39,16 @@ function App() {
         className="App"
         sx={{ backgroundColor: "background.default", color: "text.primary " }}
       >
-        <BrowserRouter>
           <NavBar />
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home mode={mode} />} />
             <Route path="/yearCharts" element={<YearAttacks />} />
             <Route path="/attackTypes" element={<AttackType />} />
             <Route path="/yearGroups" element={<YearGroups />}></Route>
             <Route path="/countryAttacks" element={<BasicMap mode={mode} />} ></Route>
             <Route path="/CountryGroups" element={<CountryGroupsGeneral mode={mode} />}></Route>
+            <Route path="/update" element={<Create isEdit={true}/>}></Route>
+            <Route path="/create" element={<Create isEdit={false}/>}></Route>
           </Routes>
           <SpeedDial
             ariaLabel="SpeedDial basic example"
@@ -57,11 +60,11 @@ function App() {
                 key={action.name}
                 icon={action.icon}
                 tooltipTitle={action.name}
+                onClick={() => navigate(action.link)}
               />
             ))}
           </SpeedDial>
           <Footer setMode={setMode} />
-        </BrowserRouter>
       </Box>
     </ThemeProvider>
   );

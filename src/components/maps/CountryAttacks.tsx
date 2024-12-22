@@ -42,7 +42,7 @@ const CountryAttacks = ({mode}:props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3030/api/analysis/highest-casualty-regions');
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/analysis/highest-casualty-regions`);
         const data: CasualtyRegion[] = await response.json();
         setData(data);
         setLoading(false);

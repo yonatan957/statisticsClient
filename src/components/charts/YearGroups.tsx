@@ -14,6 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 import { BarChart } from "@mui/x-charts";
+import { socket } from "../../main";
 
 interface IyearGroups {
   gname: string;
@@ -30,6 +31,7 @@ export default function YearGroups() {
   const [barChecked, setBarChecked] = useState(true);
   const barData = data.map((item) => item.count);
   const barLabels = data.map((item) => item.gname);
+  socket.on("eventUpdate", () => fetchData());
   const fetchData = async () => {
     if (year) {
       setLoading(true);

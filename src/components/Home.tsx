@@ -14,7 +14,12 @@ const CustomCard = styled(Card)({
   },
 });
 
-const Home = () => {
+interface props{
+  mode: "light" | "dark"
+}
+
+
+const Home = ({mode}:props) => {
   const [open, setOpen] = useState(false);
   const handleCopy = () => {
     const currentUrl = window.location.href;
@@ -22,7 +27,6 @@ const Home = () => {
       setOpen(true);
     });
   };
-
   const handleCloseSnackbar = () => {
     setOpen(false);
   };
@@ -48,6 +52,7 @@ const Home = () => {
           <NavLink style={{ textDecoration: 'none' }} to="/yearCharts">
             <CustomCard>
               <CardMedia
+                sx={{ filter : mode === "dark" ? "brightness(0.7)" : "brightness(1)"}}
                 component="img"
                 alt="פיגועים במהלך השנים"
                 height="300"
@@ -67,8 +72,9 @@ const Home = () => {
 
           <Grid item xs={12} sm={6} md={4}>
             <NavLink style={{ textDecoration: 'none' }} to="/attackTypes">
-            <CustomCard>
-              <CardMedia
+            <CustomCard>   
+              <CardMedia 
+               sx={{ filter : mode === "dark" ? "brightness(0.7)" : "brightness(1)"}}
                 component="img"
                 alt="מגמות ניתוח"
                 height="300"
@@ -90,6 +96,7 @@ const Home = () => {
           <NavLink style={{ textDecoration: 'none' }} to="/countryAttacks">
               <CustomCard>
                   <CardMedia
+                    sx={{ filter : mode === "dark" ? "brightness(0.7)" : "brightness(1)"}}
                     component="img"
                     alt="מגמות ברחבי העולם"
                     height="300"
@@ -110,6 +117,7 @@ const Home = () => {
           <NavLink style={{ textDecoration: 'none' }} to="/yearGroups">
             <CustomCard>
               <CardMedia
+                sx={{ filter : mode === "dark" ? "brightness(0.7)" : "brightness(1)"}}
                 component="img"
                 height="300"
                 image= '../../public/yearGroups.webp'
@@ -130,6 +138,7 @@ const Home = () => {
           <NavLink style={{ textDecoration: 'none' }} to="/countryGroups">
             <CustomCard>
               <CardMedia
+                sx={{ filter : mode === "dark" ? "brightness(0.7)" : "brightness(1)"}}
                 component="img"
                 height="300"
                 image= '../../public/countryGroupMap.webp'

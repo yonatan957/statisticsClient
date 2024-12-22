@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Alert, Box, Button, CircularProgress, Divider, InputLabel, MenuItem, Select, SelectChangeEvent, Snackbar, TextField, Typography } from "@mui/material";
 import CountryGroups from "./maps/CountryGroupsMap";
 import CountryGroupsChart from "./charts/CountryGroupsChart";
+import { socket } from "../main";
 
 interface props{
     mode: "light" | "dark";
@@ -28,7 +29,7 @@ export default function CountryGroupsGeneral({mode}:props) {
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
   const [countryName, setCountryName] = useState('');
-  
+  socket.on("eventUpdate", () => fetchData());
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setbymap(event.target.value === "true");
   };
@@ -75,7 +76,7 @@ export default function CountryGroupsGeneral({mode}:props) {
     setLoading(true);
     setSelectedCountry("");
     try {
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}`);
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/countrieslist`);
       const data = await response.json();
       const filteredGroups = searchTerm
         ? data.filter((country: string) =>
