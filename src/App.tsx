@@ -19,7 +19,7 @@ import CreateIcon from "@mui/icons-material/Create";
 import YearGroups from "./components/charts/YearGroupsGeneral";
 import BasicMap from "./components/maps/CountryAttacks";
 import { createAppTheme } from "./theme";
-import CountryGroups from "./components/charts/CountryGroupsChart";
+import CountryGroupsGeneral from "./components/CountryGroupsGeneral";
 
 function App() {
   const [mode, setMode] = useState<"light" | "dark">("light");
@@ -44,8 +44,8 @@ function App() {
             <Route path="/yearCharts" element={<YearAttacks />} />
             <Route path="/attackTypes" element={<AttackType />} />
             <Route path="/yearGroups" element={<YearGroups />}></Route>
-            <Route path="/countryAttacks" element={<BasicMap mode={mode} />}></Route>
-            <Route path="/countryGroups" element={<CountryGroups/>}></Route>
+            <Route path="/countryAttacks" element={<BasicMap mode={mode} />} ></Route>
+            <Route path="/CountryGroups" element={<CountryGroupsGeneral mode={mode} />}></Route>
           </Routes>
           <SpeedDial
             ariaLabel="SpeedDial basic example"
