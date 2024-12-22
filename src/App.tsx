@@ -3,7 +3,6 @@ import NavBar from "./components/NavBar";
 import Home from "./components/Home";
 import {
   Box,
-  createTheme,
   CssBaseline,
   SpeedDial,
   SpeedDialAction,
@@ -20,6 +19,7 @@ import CreateIcon from "@mui/icons-material/Create";
 import YearGroups from "./components/charts/YearGroupsGeneral";
 import BasicMap from "./components/maps/CountryAttacks";
 import { createAppTheme } from "./theme";
+import CountryGroups from "./components/charts/CountryGroupsChart";
 
 function App() {
   const [mode, setMode] = useState<"light" | "dark">("light");
@@ -45,6 +45,7 @@ function App() {
             <Route path="/attackTypes" element={<AttackType />} />
             <Route path="/yearGroups" element={<YearGroups />}></Route>
             <Route path="/countryAttacks" element={<BasicMap mode={mode} />}></Route>
+            <Route path="/countryGroups" element={<CountryGroups/>}></Route>
           </Routes>
           <SpeedDial
             ariaLabel="SpeedDial basic example"

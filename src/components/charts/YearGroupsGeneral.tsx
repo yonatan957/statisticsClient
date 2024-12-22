@@ -6,7 +6,7 @@ import FormLabel from "@mui/material/FormLabel";
 import { useState } from "react";
 import GroupYears from "./GroupYears";
 import { Box, Divider } from "@mui/material";
-import YearGroups from "./yearGroups";
+import YearGroups from "./YearGroups";
 
 export default function YearGroupsGeneral() {
   const [isByYears, setIsByYears] = useState<boolean>(true);
