@@ -44,7 +44,7 @@ function App() {
             <Route path="/yearCharts" element={<YearAttacks />} />
             <Route path="/attackTypes" element={<AttackType />} />
             <Route path="/yearGroups" element={<YearGroups />}></Route>
-            <Route path="/basicMap" element={<BasicMap mode={mode} />}></Route>
+            <Route path="/countryAttacks" element={<BasicMap mode={mode} />}></Route>
           </Routes>
           <SpeedDial
             ariaLabel="SpeedDial basic example"

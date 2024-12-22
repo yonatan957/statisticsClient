@@ -87,21 +87,23 @@ const Home = () => {
           </Grid>
 
           <Grid item xs={12} sm={6} md={4}>
+          <NavLink style={{ textDecoration: 'none' }} to="/countryAttacks">
               <CustomCard>
                   <CardMedia
                     component="img"
-                    alt="ההיסטוריה של הפיגועים"
+                    alt="מגמות ברחבי העולם"
                     height="300"
                     image='../../public/6b31379d-ce60-4331-b56a-bb4fa347c565.webp'
                   />
                   <CardContent>
                     <Typography variant="h6" gutterBottom>
-                      ההיסטוריה של הפיגועים
+                      מגמות ברחבי העולם                    
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                     סטטיסטיקות פיגועים לפי מיקומים בעולם: ניתוח גלובלי והשפעות אזוריות                    </Typography>
                   </CardContent>
                 </CustomCard>
+            </NavLink>
           </Grid>
 
           <Grid item xs={12} sm={6} md={4}>

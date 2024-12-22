@@ -28,7 +28,7 @@ interface props{
   mode: "light" | "dark";
 }
 
-const BasicMap = ({mode}:props) => {
+const CountryAttacks = ({mode}:props) => {
   const [data, setData] = useState<CasualtyRegion[]>([]);
   const [map, setMap] = useState<Map | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -156,4 +156,4 @@ const BasicMap = ({mode}:props) => {
   );
 };
 
-export default BasicMap;
+export default CountryAttacks;
