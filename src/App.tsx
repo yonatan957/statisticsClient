@@ -22,6 +22,7 @@ import BasicMap from "./components/maps/CountryAttacks";
 import { createAppTheme } from "./theme";
 import CountryGroupsGeneral from "./components/CountryGroupsGeneral";
 import Create from "./components/updates/Create";
+import Error from "./components/Error";
 
 function App() {
   const [mode, setMode] = useState<"light" | "dark">("light");
@@ -47,8 +48,9 @@ function App() {
             <Route path="/yearGroups" element={<YearGroups />}></Route>
             <Route path="/countryAttacks" element={<BasicMap mode={mode} />} ></Route>
             <Route path="/CountryGroups" element={<CountryGroupsGeneral mode={mode} />}></Route>
-            <Route path="/update" element={<Create isEdit={true}/>}></Route>
-            <Route path="/create" element={<Create isEdit={false}/>}></Route>
+            <Route path="/update" element={<Create mode={mode} isEdit={true}/>}></Route>
+            <Route path="/create" element={<Create mode={mode} isEdit={false}/>}></Route>
+            <Route path="/*" element={<Error/>}></Route>
           </Routes>
           <SpeedDial
             ariaLabel="SpeedDial basic example"
