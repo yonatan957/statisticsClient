@@ -21,6 +21,50 @@ interface props{
 
 const Home = ({mode}:props) => {
   const [open, setOpen] = useState(false);
+  const cardData = [
+    {
+      to: "/yearCharts",
+      alt: "פיגועים במהלך השנים",
+      image: "../../public/weapons.webp",
+      title: "פיגועים במהלך השנים",
+      description: "הצגת נתונים לגבי מספר הפיגועים בעולם במהלך השנים האחרונות."
+    },
+    {
+      to: "/attackTypes",
+      alt: "מגמות ניתוח",
+      image: "../../public/bludyDiaGram.webp",
+      title: "מגמות ניתוח",
+      description: "ניתוח מגמות וסטטיסטיקות מתוך הפיגועים, כולל סוגי הפיגועים."
+    },
+    {
+      to: "/countryAttacks",
+      alt: "מגמות ברחבי העולם",
+      image: "../../public/6b31379d-ce60-4331-b56a-bb4fa347c565.webp",
+      title: "מגמות ברחבי העולם",
+      description: "סטטיסטיקות פיגועים לפי מיקומים בעולם: ניתוח גלובלי והשפעות אזוריות"
+    },
+    {
+      to: "/yearGroups",
+      alt: "פעילות ארגוני טרור לאורך השנים",
+      image: "../../public/yearGroups.webp",
+      title: "פעילות ארגוני טרור לאורך השנים",
+      description: "הצגת נתונים לגבי מספר הפיגועים של קבוצות בעולם במהלך השנים האחרונות."
+    },
+    {
+      to: "/countryGroups",
+      alt: "ארגוני הטרור הקטלניים ביותר",
+      image: "../../public/countryGroupMap.webp",
+      title: "ארגוני הטרור הקטלניים ביותר",
+      description: "הצגת נתונים לגבי מספר ההרוגים ופצועים של קבוצות במדינות ספציפיות במהלך השנים האחרונות."
+    },
+    {
+      to: "/groupCountries",
+      alt: "אזורי השליטה של ארגוני טרור",
+      image: "../../public/army.png",
+      title: "אזורי השליטה של ארגוני טרור",
+      description: "הצגת נתונים על אזורים בהם לארגוני טרור מסויימים יש הכי הרבה כוח."
+    }
+  ];
   const handleCopy = () => {
     const currentUrl = window.location.href;
     navigator.clipboard.writeText(currentUrl).then(() => {
@@ -48,92 +92,29 @@ const Home = ({mode}:props) => {
         </Box>
 
         <Grid container spacing={1}>
-          <Grid item xs={12} sm={6} md={4}>
-          <NavLink style={{ textDecoration: 'none' }} to="/yearCharts">
-            <CustomCard>
-              <CardMedia
-                sx={{ filter : mode === "dark" ? "brightness(0.7)" : "brightness(1)"}}
-                component="img"
-                alt="פיגועים במהלך השנים"
-                height="300"
-                image= '../../public/weapons.webp'
-              />
-              <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  פיגועים במהלך השנים
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  הצגת נתונים לגבי מספר הפיגועים בעולם במהלך השנים האחרונות.
-                </Typography>
-              </CardContent>
-            </CustomCard>
-            </NavLink>
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={4}>
-            <NavLink style={{ textDecoration: 'none' }} to="/attackTypes">
-            <CustomCard>   
-              <CardMedia 
-               sx={{ filter : mode === "dark" ? "brightness(0.7)" : "brightness(1)"}}
-                component="img"
-                alt="מגמות ניתוח"
-                height="300"
-                image='../../public/bludyDiaGram.webp'
-              />
-              <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  מגמות ניתוח
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  ניתוח מגמות וסטטיסטיקות מתוך הפיגועים, כולל סוגי הפיגועים.
-                </Typography>
-              </CardContent>
-            </CustomCard>
-            </NavLink>
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={4}>
-          <NavLink style={{ textDecoration: 'none' }} to="/countryAttacks">
-              <CustomCard>
+        {cardData.map((card, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <NavLink style={{ textDecoration: 'none' }} to={card.to}>
+                <CustomCard>
                   <CardMedia
-                    sx={{ filter : mode === "dark" ? "brightness(0.7)" : "brightness(1)"}}
+                    sx={{ filter: mode === "dark" ? "brightness(0.7)" : "brightness(1)" }}
                     component="img"
-                    alt="מגמות ברחבי העולם"
+                    alt={card.alt}
                     height="300"
-                    image='../../public/6b31379d-ce60-4331-b56a-bb4fa347c565.webp'
+                    image={card.image}
                   />
                   <CardContent>
                     <Typography variant="h6" gutterBottom>
-                      מגמות ברחבי העולם                    
+                      {card.title}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                    סטטיסטיקות פיגועים לפי מיקומים בעולם: ניתוח גלובלי והשפעות אזוריות                    </Typography>
+                      {card.description}
+                    </Typography>
                   </CardContent>
                 </CustomCard>
-            </NavLink>
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={4}>
-          <NavLink style={{ textDecoration: 'none' }} to="/yearGroups">
-            <CustomCard>
-              <CardMedia
-                sx={{ filter : mode === "dark" ? "brightness(0.7)" : "brightness(1)"}}
-                component="img"
-                height="300"
-                image= '../../public/yearGroups.webp'
-              />
-              <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  פעילות ארגוני טרור לאורך השנים
-                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  הצגת נתונים לגבי מספר הפיגועים של קבוצות בעולם במהלך השנים האחרונות.
-                </Typography>
-              </CardContent>
-            </CustomCard>
-            </NavLink>
-          </Grid>
-
+              </NavLink>
+            </Grid>
+          ))}
           <Grid item xs={12} sm={6} md={4}>
           <NavLink style={{ textDecoration: 'none' }} to="/countryGroups">
             <CustomCard>
@@ -141,14 +122,14 @@ const Home = ({mode}:props) => {
                 sx={{ filter : mode === "dark" ? "brightness(0.7)" : "brightness(1)"}}
                 component="img"
                 height="300"
-                image= '../../public/countryGroupMap.webp'
+                image= '../../public/freeSearch.webp'
               />
               <CardContent>
                 <Typography variant="h6" gutterBottom>
-                ארגוני הטרור הקטלניים ביותר
+                  חיפוש חופשי.                  
                  </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  הצגת נתונים לגבי מספר ההרוגים ופצועים של קבוצות במדינות ספציפיות במהלך השנים האחרונות.
+                  חיפוש חופשי על מאגר פיגועי הטרור בין השנים 1970-2017.
                 </Typography>
               </CardContent>
             </CustomCard>
