@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, TextField, Button, Typography, Grid, Snackbar, Alert } from "@mui/material";
-import { set } from "ol/transform";
+import OpenLayersMap from "../maps/OpenLayersMap";
 
 export interface IEventFormProps {
   isEdit: boolean;
+  mode: "light"| "dark"
 }
 
 export interface IEvent{
@@ -29,9 +30,16 @@ export interface IEvent{
   nperps?: number;
 }
 
-export default function Create({ isEdit }: IEventFormProps) {
+export default function Create({ isEdit, mode }: IEventFormProps) {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [SnackbarMessage, setSnackbarMessage] = useState("");
+  const [lat, setLat] = useState(0)
+  const [lng, setLng] = useState(0)
+  const [changedFields, setChangedFields] = useState<Partial<IEvent>>({
+    latitude: lat,
+    longitude: lng,
+  });
+
   const [formData, setFormData] = useState<Partial<IEvent>>({
     _id: undefined,
     iyear: undefined,
@@ -40,8 +48,8 @@ export default function Create({ isEdit }: IEventFormProps) {
     country_txt: "",
     region_txt: "",
     city: "",
-    // latitude: undefined,
-    // longitude: undefined,
+    latitude: lat,
+    longitude: lng,
     attacktype1_txt: "",
     targtype1_txt: "",
     target1: "",
@@ -54,8 +62,14 @@ export default function Create({ isEdit }: IEventFormProps) {
     nperps: undefined,
     eventid: 0
   });
-
-  const [changedFields, setChangedFields] = useState<Partial<IEvent>>({});
+  useEffect(() => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      latitude: lat,
+      longitude: lng,
+    }));
+    setChangedFields((prevChangeFields)=>({...prevChangeFields, latitude:lat, longitude:lng}))
+  }, [lat, lng]);
 
   const fields = [
     { label: "Event ID", key: "_id", type: "text", required: !isEdit },
@@ -85,8 +99,7 @@ export default function Create({ isEdit }: IEventFormProps) {
       const updatedFormData = { ...prevFormData, [field]: value }; 
       setChangedFields((prevChangedFields) => {
         const updatedChangedFields = { ...prevChangedFields };
-          updatedChangedFields[field] = value;
-  
+          updatedChangedFields[field] = value;        
         for (const key in updatedChangedFields) {
           if ((updatedChangedFields as any)[key] === null || (updatedChangedFields as any)[key] === undefined || (updatedChangedFields as any)[key] === "") {
             delete (updatedChangedFields as any)[key];
@@ -110,7 +123,6 @@ export default function Create({ isEdit }: IEventFormProps) {
       const requiredFields = Object.keys(formData).filter(
         (key) => key !== "_id" && formData[key as keyof IEvent] === undefined
       );
-      console.log(requiredFields);
       if (requiredFields.length > 0) {
         setSnackbarMessage("אנא מלא את כל השדות הדרושים.");
         setOpenSnackbar(true);
@@ -165,6 +177,10 @@ export default function Create({ isEdit }: IEventFormProps) {
       <Button variant="contained" color="primary" onClick={handleSubmit}>
         {isEdit ? "שמור שינויים" : "צור אירוע"}
       </Button>
+      <Box sx={{filter:mode === 'light' ? '' : 'brightness(0.5)', boxShadow:"0px 1px 5px grey",width:"100%", height:"50vh"}}>
+        <OpenLayersMap setLat={setLat} setLng={setLng} markers={[{location:[lng, lat],info:[{name:"country", value:""}]}]}>          
+        </OpenLayersMap>
+      </Box>
       <Snackbar open={openSnackbar} autoHideDuration={3000} onClose={() => setOpenSnackbar(false)}>
         <Alert onClose={() => setOpenSnackbar(false)} severity="warning" sx={{ width: "100%" }}>
           {SnackbarMessage}

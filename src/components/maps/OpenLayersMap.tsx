@@ -3,7 +3,7 @@ import 'ol/ol.css';
 import { Map, View, Overlay } from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
-import { fromLonLat } from 'ol/proj';
+import { fromLonLat, toLonLat } from 'ol/proj';
 import { Feature } from 'ol';
 import Point from 'ol/geom/Point';
 import VectorLayer from 'ol/layer/Vector';
@@ -18,8 +18,11 @@ export interface Marker {
 }
 export interface MapComponentProps {
   markers: Marker[];
+  setLat?: (lat: number) => void | null;
+  setLng?: (lng: number) => void | null;
 }
-export default function OpenLayersMap({ markers }: MapComponentProps) {
+
+export default function OpenLayersMap({ markers, setLat, setLng }: MapComponentProps) {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const popupRef = useRef<HTMLDivElement | null>(null);
   const [map, setMap] = useState<Map | null>(null);
@@ -41,6 +44,7 @@ export default function OpenLayersMap({ markers }: MapComponentProps) {
         zoom: 1,
       }),
     });
+  
     initialMap.on('click', (event) => {
       const feature = initialMap.forEachFeatureAtPixel(event.pixel, (feat) => feat);
       if (feature) {
@@ -58,13 +62,22 @@ export default function OpenLayersMap({ markers }: MapComponentProps) {
           popupRef.current!.style.display = 'block';
           popupRef.current!.innerHTML = `<div>${info.map((item: { name: string; value: string }) => {
             return `<div><strong>${item.name}:</strong> ${item.value} <br /></div>`;
-          }).join('')}</div>`;        }
+          }).join('')}</div>`;
+        }
       } else {
         popupRef.current!.style.display = 'none';
       }
+        const [lon, lat] = initialMap.getCoordinateFromPixel(event.pixel);
+      if (lat !== undefined && lon !== undefined) {
+        const [geoLon, geoLat] = toLonLat([lon, lat]);
+        if (setLat) setLat(geoLat);
+        if (setLng) setLng(geoLon);
+      }
     });
+  
     setMap(initialMap);
   }, []);
+  
   useEffect(() => {
     vectorSource.current.clear();
     markers.forEach((marker) => {
