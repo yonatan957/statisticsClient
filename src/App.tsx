@@ -23,6 +23,7 @@ import { createAppTheme } from "./theme";
 import CountryGroupsGeneral from "./components/CountryGroupsGeneral";
 import Create from "./components/updates/Create";
 import Error from "./components/Error";
+import Delete from "./components/updates/Delete";
 
 function App() {
   const [mode, setMode] = useState<"light" | "dark">("light");
@@ -50,6 +51,7 @@ function App() {
             <Route path="/CountryGroups" element={<CountryGroupsGeneral mode={mode} />}></Route>
             <Route path="/update" element={<Create mode={mode} isEdit={true}/>}></Route>
             <Route path="/create" element={<Create mode={mode} isEdit={false}/>}></Route>
+            <Route path="/delete" element={<Delete/>}></Route>
             <Route path="/*" element={<Error/>}></Route>
           </Routes>
           <SpeedDial
