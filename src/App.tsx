@@ -25,6 +25,7 @@ import Create from "./components/updates/Create";
 import Error from "./components/Error";
 import Delete from "./components/updates/Delete";
 import GroupCoutnries from "./components/maps/GroupCountries";
+import SearchGenerl from "./components/searchcomponents/SearchGenerl";
 
 function App() {
   const [mode, setMode] = useState<"light" | "dark">("light");
@@ -51,6 +52,7 @@ function App() {
             <Route path="/countryAttacks" element={<BasicMap mode={mode} />} ></Route>
             <Route path="/CountryGroups" element={<CountryGroupsGeneral mode={mode} />}></Route>
             <Route path="/groupCountries" element={<GroupCoutnries mode={mode}/>}></Route>
+            <Route path="/freeSearch" element={<SearchGenerl/>}></Route>
             <Route path="/update" element={<Create mode={mode} isEdit={true}/>}></Route>
             <Route path="/create" element={<Create mode={mode} isEdit={false}/>}></Route>
             <Route path="/delete" element={<Delete/>}></Route>

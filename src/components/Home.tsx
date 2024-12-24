@@ -116,7 +116,7 @@ const Home = ({mode}:props) => {
             </Grid>
           ))}
           <Grid item xs={12} sm={6} md={4}>
-          <NavLink style={{ textDecoration: 'none' }} to="/countryGroups">
+          <NavLink style={{ textDecoration: 'none' }} to="/freeSearch">
             <CustomCard>
               <CardMedia
                 sx={{ filter : mode === "dark" ? "brightness(0.7)" : "brightness(1)"}}

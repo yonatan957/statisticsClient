@@ -90,17 +90,18 @@ export default function GroupYears({mode}:props) {
     <Box sx={{ maxWidth: "100%", margin: "0 auto", padding: 2 }}>
       <Box sx={{ marginBottom: 4 }}>
         <Typography variant="h3" gutterBottom>
-          סטטיסטיקות שנים לפי קבוצה
+          סטטיסטיקות ארגונים לפי מדינה
         </Typography>
         <Typography variant="body1" paragraph>
-          בדף זה מוצגים נתונים חשובים לגבי סוגי התקפות וההשפעה שלהם על הרוגים
-          ופצועים בכל העולם. הקלידו את שם הקבוצה ובחרו מתוך הרשימה כדי לקבל
-          תובנות ברורות ומעמיקות על הנתונים שלה לאורך השנים.
+          בדף זה תוכלו לראות את הכוח של כל ארגון במדינות שונות ברחבי העולם. 
+          בחרו ארגון מתוך הרשימה, 
+          כדי לקבל תובנות ברורות לגבי האזורים בהם הארגון פעיל ביותר.
         </Typography>
       </Box>
       <Box sx={{ marginBottom: 4 }}>
         <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          בחרו קבוצה מתוך הרשימה ולאחר מכן לחצו על "הצג נתונים".
+          בחרו ארגון מתוך הרשימה, קבעו את כמות המדינות בהן תרצו לראות את הנתונים, 
+          ולאחר מכן לחצו על "הצג נתונים" כדי לקבל תוצאות.
         </Typography>
       </Box>
       <form onSubmit={handleSubmit}>
