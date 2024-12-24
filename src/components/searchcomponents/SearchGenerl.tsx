@@ -42,16 +42,38 @@ export default function SearchGenerl({ mode }: props) {
   }, [page, searchText]); 
 
   return ( 
-    <Box className="ltr-box" sx={{ height: "100vh", gap: 5, maxWidth: "100%", margin: "100px auto", padding: 2, display: "flex", flexDirection: "column", alignItems: "center" }}> 
+    <>
+    <Box sx={{ marginBottom: 4 ,display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
+      <Typography variant="h3" gutterBottom>
+        חיפוש חופשי
+      </Typography>
+      <Typography variant="body1" paragraph>
+        בדף זה תוכלו לבצע חיפוש על מאגר המתקפות במאגר לפי תיאור האירוע.
+      </Typography>
+    </Box>
+    <Box>
+      <Typography variant="body2" sx={{ color: "text.secondary" }}>
+        חפשו על פי טקסט באנגלית בלבד ולאחר מכן לחצו על הנווטן על המפה כדי לראות פרטים על האירוע.
+      </Typography>
+    </Box>
+    <Box className="ltr-box" sx={{ height: "auto", gap: 5,width: "200vh", maxWidth: "100%", margin: "100px auto", padding: 2, display: "flex", flexDirection: "column", alignItems: "center" }}> 
       <SearchBar setSearchText={setSearchText}></SearchBar> 
-      <Box sx={{ width: "200%", zIndex: 999, height: "50vh", boxShadow: "0 0 10px rgba(0, 0, 0, 0.3)" }}> 
+
+      <Box sx={{ width: "100%", zIndex: 999, height: "60vh", boxShadow: "0 0 10px rgba(0, 0, 0, 0.3)" }}> 
         <OpenLayersMapV2 mode={mode} markers={data.filter((event) => event.latitude && event.longitude).map((event) => ({ location: [event.longitude as number, event.latitude as number], info: event }))} setEvent={setEvent}></OpenLayersMapV2> 
       </Box> 
-      {event && (<Box sx={{ width: "100%", position: "absolute", top: "75%", left: "50%", transform: "translate(-50%, -50%)" }}>{event && <EventCard event={event}></EventCard>}</Box>)} 
       <Snackbar open={openSnackbar} autoHideDuration={3000} onClose={() => setOpenSnackbar(false)}> 
         <Alert onClose={() => setOpenSnackbar(false)} severity="warning" sx={{ width: "100%" }}>{SnackbarMessage}</Alert> 
-      </Snackbar> 
-      {data.length > 0 && (<Box sx={{ width: "100%" }}><Stack className="ltr-box" spacing={2}><Typography>Page: {page}</Typography><Pagination page={page} onChange={(_, page) => setPage(page)} count={100} color="primary" /></Stack></Box>)} 
+      </Snackbar>
+
+      {data.length > 0 && (<Box sx={{gap: 3, width: "100%",display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>       
+      <Typography variant="body2" sx={{ color: "text.secondary" }}>בכל דף יש 100 אירועים דפדפו הלאה כדי לראות עוד.</Typography>
+      <Stack className="ltr-box" spacing={2}>
+        <Typography>Page: {page}</Typography><Pagination page={page} onChange={(_, page) => setPage(page)} count={100} color="primary" />
+      </Stack></Box>)} 
+      <Box>{event && <EventCard event={event}></EventCard>}</Box>
+
     </Box> 
+    </>
   ); 
 }

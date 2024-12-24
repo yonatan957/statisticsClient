@@ -15,18 +15,17 @@ const EventCard = ({ event }: { event: IEvent }) => {
     nkill: "Killed",
     nwound: "Wounded",
     ransomamt: "Ransom Amount",
-    summary: "Summary",
     nperps: "Perpetrators",
   };
 
   return (
-    <Grid item xs={12} sm={6} md={4}>
-      <Card sx={{ maxWidth: 345, boxShadow: 3 }}>
+    <Grid item xs={12} sm={12} md={12}>
+      <Card sx={{ boxShadow: 3, width: "100%" }}>
         <CardContent>
           <Typography
             variant="h6"
             component="div"
-            sx={{ fontWeight: "bold", direction: "ltr" }}
+            sx={{ fontWeight: "bold", direction: "ltr", textAlign: "center" }}
           >
             {event.city
               ? `${event.city}, ${event.country_txt}`
@@ -34,7 +33,7 @@ const EventCard = ({ event }: { event: IEvent }) => {
           </Typography>
 
           <Typography
-            sx={{ direction: "ltr" }}
+            sx={{ direction: "ltr", textAlign: "center" }}
             variant="subtitle1"
             color="textSecondary"
           >
@@ -42,29 +41,43 @@ const EventCard = ({ event }: { event: IEvent }) => {
           </Typography>
 
           <Box sx={{ mt: 2 }}>
-            {Object.entries(fieldLabels).map(([field, label]) => {
-              if (
-                event[field as keyof IEvent] !== null &&
-                event[field as keyof IEvent] !== undefined &&
-                event[field as keyof IEvent] !== ""
-              ) {
-                return (
-                  <Typography
-                    sx={{ direction: "ltr" }}
-                    key={field}
-                    variant="body2"
-                    color="textPrimary"
-                  >
-                    <strong>{label}:</strong> {event[field as keyof IEvent]}
-                  </Typography>
-                );
-              }
-              return null;
-            })}
+            <Grid container spacing={2}>
+              {Object.entries(fieldLabels).map(([field, label]) => {
+                const fieldValue = event[field as keyof IEvent];
+                if (
+                  fieldValue !== null &&
+                  fieldValue !== undefined &&
+                  fieldValue !== ""
+                ) {
+                  return (
+                    <Grid item xs={12} sm={6} md={4} key={field}>
+                      <Typography variant="body2" color="textSecondary">
+                        <strong>{label}:</strong>
+                      </Typography>
+                      <Typography variant="body1" color="textPrimary">
+                        {fieldValue}
+                      </Typography>
+                    </Grid>
+                  );
+                }
+                return null;
+              })}
+            </Grid>
+            {event.summary && (
+              <Box sx={{ mt: 2, borderTop: "1px solid #ccc", pt: 2 }}>
+                <Typography variant="h6" color="textSecondary">
+                  <strong>Summary:</strong>
+                </Typography>
+                <Typography variant="body1" color="textPrimary">
+                  {event.summary}
+                </Typography>
+              </Box>
+            )}
           </Box>
         </CardContent>
       </Card>
     </Grid>
   );
 };
+
 export default EventCard;

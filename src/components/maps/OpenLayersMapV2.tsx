@@ -69,7 +69,7 @@ export default function OpenLayersMapV2<T>({ markers, setEvent, setLat, setLng, 
   return ( 
     <Box className="map-container" sx={{ filter: mode === 'light' ? '' : 'brightness(0.5)', position: 'relative', width: '100%', height: '100%' }}> 
       <Box ref={mapRef} style={{ width: '100%', height: '100%' }} /> 
-      <Box ref={popupRef} sx={{ display: 'none', backgroundColor: 'white', border: '1px solid black', padding: '5px', borderRadius: '5px', position: 'absolute', zIndex: 10000, pointerEvents: 'none', fontSize: '12px' }}> 
+      <Box ref={popupRef} sx={{ display: 'none', backgroundColor: 'white', border: '1px solid black', padding: '5px', borderRadius: '5px', position: 'absolute', zIndex: 10, pointerEvents: 'none', fontSize: '12px' }}> 
         <p>פרטים על המיקום</p> 
       </Box> 
     </Box> 
