@@ -3,24 +3,25 @@ import 'ol/ol.css';
 import { Map, View } from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
-import { fromLonLat} from 'ol/proj';
+import { fromLonLat, toLonLat} from 'ol/proj';
 import { Feature } from 'ol';
 import Point from 'ol/geom/Point';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import { Style, Icon } from 'ol/style';
 import { Box } from '@mui/material';
-import { IEvent } from '../Types/event';
-export interface Marker {
+export interface Marker<T> {
   location: [number, number];
-  info: IEvent
+  info: T
 }
-export interface MapComponentProps {
-  markers: Marker[];
-  setEvent: (event: IEvent)=> void
+export interface MapComponentProps<T> {
+  markers: Marker<T>[];
+  setEvent: (event: T)=> void
+  setLat?: (lat: number) => void | null;
+  setLng?: (lng: number) => void | null;
 }
 
-export default function OpenLayersMapV2({ markers, setEvent}: MapComponentProps) {
+export default function OpenLayersMapV2<T>({ markers, setEvent, setLat, setLng }: MapComponentProps<T>) {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const popupRef = useRef<HTMLDivElement | null>(null);
   const [map, setMap] = useState<Map | null>(null);
@@ -54,8 +55,14 @@ export default function OpenLayersMapV2({ markers, setEvent}: MapComponentProps)
       } else {
         popupRef.current!.style.display = 'none';
       }
+      const [lon, lat] = initialMap.getCoordinateFromPixel(event.pixel);
+      if (lat !== undefined && lon !== undefined) {
+        const [geoLon, geoLat] = toLonLat([lon, lat]);
+        if (setLat) setLat(geoLat);
+        if (setLng) setLng(geoLon);
+      }
     });
-  
+    
     setMap(initialMap);
   }, []);
   

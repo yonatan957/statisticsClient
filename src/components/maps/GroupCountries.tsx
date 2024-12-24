@@ -1,7 +1,8 @@
-import {Alert,Box, Button, CircularProgress, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Snackbar, TextField, Typography,} from "@mui/material";
+import {Alert,Box, Button, CircularProgress, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Snackbar, Stack, TextField, Typography,} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { socket } from "../../main";
 import OpenLayersMap from "./OpenLayersMap";
+import OpenLayersMapV2 from "./OpenLayersMapV2";
 
 interface IgroupCountries {
   country: string;
@@ -22,6 +23,7 @@ export default function GroupYears({mode}:props) {
   const [data, setData] = useState<IgroupCountries[]>([]);
   const [amount, setAmount] = useState<number>(5);
   socket.on("eventUpdate", () => fetchData());
+  const [item, setItem]= useState<IgroupCountries| null>(null);
   const handleChange = (event: SelectChangeEvent<string>) => {
     setSelectedGroup(event.target.value);
   };
@@ -90,7 +92,7 @@ export default function GroupYears({mode}:props) {
     <Box sx={{ maxWidth: "100%", margin: "0 auto", padding: 2 }}>
       <Box sx={{ marginBottom: 4 }}>
         <Typography variant="h3" gutterBottom>
-          סטטיסטיקות ארגונים לפי מדינה
+          סטטיסטיקות ארגון לפי מדינות.
         </Typography>
         <Typography variant="body1" paragraph>
           בדף זה תוכלו לראות את הכוח של כל ארגון במדינות שונות ברחבי העולם. 
@@ -148,7 +150,7 @@ export default function GroupYears({mode}:props) {
       </form>
 
       <Box sx={{ marginTop: 4, width: "100%", height: "50vh", boxShadow: "0 0 10px rgba(0, 0, 0, 0.3)" }}>
-        <OpenLayersMap markers={data.map((data) => ({ location: [data.lng, data.lat], info: [{name: "Country:", value: `data.country`}, {name: "Count of attacks:", value: `${data.count}`}, {name: "Rate of group:", value: `${data.rate}`}] }))} />
+        <OpenLayersMapV2 setEvent={setItem} markers={data.map((data) => ({ location: [data.lng, data.lat], info: data}))} />
       </Box>
       <Snackbar
         open={openSnackbar}
@@ -163,6 +165,29 @@ export default function GroupYears({mode}:props) {
           אנא בחר קבוצה
         </Alert>
       </Snackbar>
+      {item && <Box 
+      className="ltr-box"
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        backgroundColor: 'primary.main',
+        padding: '10px',
+        borderRadius: '8px',
+        margin: '10px 0',
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+        justifyContent: 'space-around',
+      }}
+    >
+        <Typography variant="body1" sx={{ fontWeight: 'bold', color: '#333' }}>
+          {`Country: ${item.country}`}
+        </Typography>
+        <Typography variant="body1" sx={{ color: '#666' }}>
+          {`Count of killed and wounded: ${item.count}`}
+        </Typography>
+        <Typography variant="body1" sx={{ color: '#666' }}>
+          {`Rate of group: ${item.rate}`}
+        </Typography>
+    </Box>}
     </Box>
   );
 }

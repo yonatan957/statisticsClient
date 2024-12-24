@@ -1,5 +1,5 @@
 import { Card, CardContent, Typography, Grid, Box } from '@mui/material';
-import { IEvent } from '../updates/Create';
+import { IEvent } from '../Types/event';
 
 const EventCard = ({ event }: { event: IEvent }) => {
   const fieldLabels = {

@@ -37,12 +37,15 @@ export default function SearchGenerl() {
         handleSearchClick();
     }, [page, searchText]);
     return (
-      <Box sx={{height: "100vh",gap: 5, maxWidth: "100%", margin: "0 auto", padding: 2 ,display: "flex", flexDirection: "column", alignItems: "center"}}>
+      <Box className="ltr-box" sx={{height: "100vh",gap: 5, maxWidth: "100%", margin: "100px auto", padding: 2 ,display: "flex", flexDirection: "column", alignItems: "center"}}>
             <SearchBar setSearchText={setSearchText}></SearchBar>
-            { event && <EventCard event={event} ></EventCard>}
-            <Box sx={{ width: '200%' , height: "50vh" , boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)'}}>
-                <OpenLayersMapV2 markers={[]} setEvent={setEvent}></OpenLayersMapV2>      
+            <Box sx={{ width: '200%' , zIndex: 999, height: "50vh" , boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)'}}>
+                <OpenLayersMapV2 markers={data.filter((event) => event.latitude && event.longitude).map((event) => ({location: [(event.longitude as number), (event.latitude as number)], info: event}))} setEvent={setEvent}></OpenLayersMapV2>      
             </Box>
+            { event && <Box sx={{ width: '100%', position: "absolute", top: "75%", left: "50%", transform: "translate(-50%, -50%)" }}>
+                { event && <EventCard event={event} ></EventCard>}
+            </Box>}
+
             <Snackbar open={openSnackbar} autoHideDuration={3000} onClose={() => setOpenSnackbar(false)}>
                 <Alert onClose={() => setOpenSnackbar(false)} severity="warning" sx={{ width: "100%" }}>
                   {SnackbarMessage}
@@ -51,7 +54,7 @@ export default function SearchGenerl() {
             {data.length > 0 && <Box sx={{ width: '100%' }}>
                 <Stack className="ltr-box"  spacing={2}>
                 <Typography>Page: {page}</Typography>
-                    <Pagination page={page} onChange={(_, page) => setPage(page)} count={10} color="primary" />
+                    <Pagination page={page} onChange={(_, page) => setPage(page)} count={100} color="primary" />
                 </Stack>
             </Box>}
       </Box>
