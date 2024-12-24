@@ -115,7 +115,7 @@ const CountryAttacks = ({mode}:props) => {
   }, [map, data]);
 
   return (
-    <Box sx={{ width: '80%', height: '80vh', position: 'relative' }}>
+    <Box sx={{ width: '80%', height: '80vh', position: 'relative',marginBottom: 10 }}>
       {loading && (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center',height: '100vh',}}>
           <CircularProgress />
