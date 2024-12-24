@@ -20,7 +20,7 @@ export const createAppTheme = (mode: "light" | "dark") => {
         main: "rgb(17, 185, 101)",
       },
       background: {
-        default: mode === "light" ? "rgb(198, 211, 211)" : "rgb(78, 102, 102)",
+        default: mode === "light" ? "rgb(209, 221, 221)" : "rgb(78, 102, 102)",
         paper: mode === "light" ? "rgb(141, 211, 211)" : "rgb(23, 83, 83)",
       },
       text: {

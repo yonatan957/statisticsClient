@@ -25,7 +25,7 @@ const Home = ({mode}:props) => {
     {
       to: "/yearCharts",
       alt: "פיגועים במהלך השנים",
-      image: "/weapons.webp",  // קישור מוחלט לתמונה
+      image: "/weapons.webp",
       title: "פיגועים במהלך השנים",
       description: "הצגת נתונים לגבי מספר הפיגועים בעולם במהלך השנים האחרונות."
     },
@@ -122,7 +122,7 @@ const Home = ({mode}:props) => {
                 sx={{ filter : mode === "dark" ? "brightness(0.7)" : "brightness(1)"}}
                 component="img"
                 height="300"
-                image= './freeSearch.webp'
+                image= '/freeSearch.webp'
               />
               <CardContent>
                 <Typography variant="h6" gutterBottom>
