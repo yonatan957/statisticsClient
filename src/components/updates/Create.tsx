@@ -1,34 +1,14 @@
 import { useEffect, useState } from "react";
 import { Box, TextField, Button, Typography, Grid, Snackbar, Alert } from "@mui/material";
 import OpenLayersMap from "../maps/OpenLayersMap";
+import { IEvent } from "../Types/event";
 
 export interface IEventFormProps {
   isEdit: boolean;
   mode: "light"| "dark"
 }
 
-export interface IEvent{
-  eventid: number;
-  _id: number;
-  iyear: number;
-  imonth: number;
-  iday: number;
-  country_txt: string;
-  region_txt: string;
-  city?: string;
-  latitude?: number;
-  longitude?: number;
-  attacktype1_txt: string;
-  targtype1_txt: string;
-  target1?: string;
-  gname: string;
-  weaptype1_txt: string;
-  nkill?: number;
-  nwound?: number;
-  ransomamt?: number;
-  summary?: string;
-  nperps?: number;
-}
+
 
 export default function Create({ isEdit, mode }: IEventFormProps) {
   const [openSnackbar, setOpenSnackbar] = useState(false);
