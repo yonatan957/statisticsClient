@@ -1,20 +1,26 @@
 import { useEffect, useState } from "react";
-import { Box, TextField, Button, Typography, Grid, Snackbar, Alert } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Button,
+  Typography,
+  Grid,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 import OpenLayersMap from "../maps/OpenLayersMap";
-import { IEvent } from "../Types/event";
+import { IEvent } from "../../Types/event";
 
 export interface IEventFormProps {
   isEdit: boolean;
-  mode: "light"| "dark"
+  mode: "light" | "dark";
 }
-
-
 
 export default function Create({ isEdit, mode }: IEventFormProps) {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [SnackbarMessage, setSnackbarMessage] = useState("");
-  const [lat, setLat] = useState(0)
-  const [lng, setLng] = useState(0)
+  const [lat, setLat] = useState(0);
+  const [lng, setLng] = useState(0);
   const [changedFields, setChangedFields] = useState<Partial<IEvent>>({
     latitude: lat,
     longitude: lng,
@@ -40,7 +46,7 @@ export default function Create({ isEdit, mode }: IEventFormProps) {
     ransomamt: undefined,
     summary: "",
     nperps: undefined,
-    eventid: 0
+    eventid: 0,
   });
   useEffect(() => {
     setFormData((prevFormData) => ({
@@ -48,7 +54,11 @@ export default function Create({ isEdit, mode }: IEventFormProps) {
       latitude: lat,
       longitude: lng,
     }));
-    setChangedFields((prevChangeFields)=>({...prevChangeFields, latitude:lat, longitude:lng}))
+    setChangedFields((prevChangeFields) => ({
+      ...prevChangeFields,
+      latitude: lat,
+      longitude: lng,
+    }));
   }, [lat, lng]);
 
   const fields = [
@@ -61,27 +71,56 @@ export default function Create({ isEdit, mode }: IEventFormProps) {
     { label: "City", key: "city", type: "text", required: false },
     { label: "Latitude", key: "latitude", type: "number", required: false },
     { label: "Longitude", key: "longitude", type: "number", required: false },
-    { label: "Attack Type", key: "attacktype1_txt", type: "text", required: !isEdit },
-    { label: "Target Type", key: "targtype1_txt", type: "text", required: !isEdit },
+    {
+      label: "Attack Type",
+      key: "attacktype1_txt",
+      type: "text",
+      required: !isEdit,
+    },
+    {
+      label: "Target Type",
+      key: "targtype1_txt",
+      type: "text",
+      required: !isEdit,
+    },
     { label: "Target", key: "target1", type: "text", required: false },
     { label: "Group Name", key: "gname", type: "text", required: !isEdit },
-    { label: "Weapon Type", key: "weaptype1_txt", type: "text", required: !isEdit },
+    {
+      label: "Weapon Type",
+      key: "weaptype1_txt",
+      type: "text",
+      required: !isEdit,
+    },
     { label: "Number Killed", key: "nkill", type: "number", required: false },
     { label: "Number Wounded", key: "nwound", type: "number", required: false },
-    { label: "Ransom Amount", key: "ransomamt", type: "number", required: false },
+    {
+      label: "Ransom Amount",
+      key: "ransomamt",
+      type: "number",
+      required: false,
+    },
     { label: "Summary", key: "summary", type: "text", required: false },
-    { label: "Number of Perpetrators", key: "nperps", type: "number", required: false },
+    {
+      label: "Number of Perpetrators",
+      key: "nperps",
+      type: "number",
+      required: false,
+    },
     { label: "eventid", key: "eventid", type: "number", required: true },
   ];
 
   const handleChange = (field: keyof IEvent, value: any) => {
     setFormData((prevFormData) => {
-      const updatedFormData = { ...prevFormData, [field]: value }; 
+      const updatedFormData = { ...prevFormData, [field]: value };
       setChangedFields((prevChangedFields) => {
         const updatedChangedFields = { ...prevChangedFields };
-          updatedChangedFields[field] = value;        
+        updatedChangedFields[field] = value;
         for (const key in updatedChangedFields) {
-          if ((updatedChangedFields as any)[key] === null || (updatedChangedFields as any)[key] === undefined || (updatedChangedFields as any)[key] === "") {
+          if (
+            (updatedChangedFields as any)[key] === null ||
+            (updatedChangedFields as any)[key] === undefined ||
+            (updatedChangedFields as any)[key] === ""
+          ) {
             delete (updatedChangedFields as any)[key];
           }
         }
@@ -90,7 +129,6 @@ export default function Create({ isEdit, mode }: IEventFormProps) {
       return updatedFormData;
     });
   };
-  
 
   const handleSubmit = () => {
     if (isEdit) {
@@ -109,7 +147,7 @@ export default function Create({ isEdit, mode }: IEventFormProps) {
         return;
       }
     }
-      onSubmit(changedFields);
+    onSubmit(changedFields);
   };
 
   const onSubmit = async (data: Partial<IEvent>) => {
@@ -122,7 +160,9 @@ export default function Create({ isEdit, mode }: IEventFormProps) {
         body: JSON.stringify(data),
       });
       if (response.ok) {
-        setSnackbarMessage(isEdit ? "האירוע עודכן בהצלחה." : "האירוע יוצר בהצלחה.");
+        setSnackbarMessage(
+          isEdit ? "האירוע עודכן בהצלחה." : "האירוע יוצר בהצלחה."
+        );
         setOpenSnackbar(true);
       } else {
         throw new Error(`${(await response.json()).error}`);
@@ -134,19 +174,35 @@ export default function Create({ isEdit, mode }: IEventFormProps) {
   };
 
   return (
-    <Box component="form" sx={{ display: "flex", flexDirection: "column", gap: 2, maxWidth: 600, mx: "auto" }}>
+    <Box
+      component="form"
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
+        maxWidth: 600,
+        mx: "auto",
+      }}
+    >
       <Typography variant="h5">
         {isEdit ? "ערוך אירוע" : "צור אירוע חדש"}
       </Typography>
       <Grid container spacing={2}>
         {fields
-          .filter((field) => field.key !== "latitude" && field.key !== "longitude" && (isEdit || field.key !== "_id"))
+          .filter(
+            (field) =>
+              field.key !== "latitude" &&
+              field.key !== "longitude" &&
+              (isEdit || field.key !== "_id")
+          )
           .map((field) => (
             <Grid item xs={12} sm={6} md={4} key={field.key}>
               <TextField
                 label={field.label}
                 value={formData[field.key as keyof IEvent] || ""}
-                onChange={(e) => handleChange(field.key as keyof IEvent, e.target.value)}
+                onChange={(e) =>
+                  handleChange(field.key as keyof IEvent, e.target.value)
+                }
                 type={field.type}
                 required={field.required}
                 fullWidth
@@ -157,12 +213,32 @@ export default function Create({ isEdit, mode }: IEventFormProps) {
       <Button variant="contained" color="primary" onClick={handleSubmit}>
         {isEdit ? "שמור שינויים" : "צור אירוע"}
       </Button>
-      <Box sx={{filter:mode === 'light' ? '' : 'brightness(0.5)', boxShadow:"0px 1px 5px grey",width:"100%", height:"50vh"}}>
-        <OpenLayersMap setLat={setLat} setLng={setLng} markers={[{location:[lng, lat],info:[{name:"country", value:""}]}]}>          
-        </OpenLayersMap>
+      <Box
+        sx={{
+          filter: mode === "light" ? "" : "brightness(0.5)",
+          boxShadow: "0px 1px 5px grey",
+          width: "100%",
+          height: "50vh",
+        }}
+      >
+        <OpenLayersMap
+          setLat={setLat}
+          setLng={setLng}
+          markers={[
+            { location: [lng, lat], info: [{ name: "country", value: "" }] },
+          ]}
+        ></OpenLayersMap>
       </Box>
-      <Snackbar open={openSnackbar} autoHideDuration={3000} onClose={() => setOpenSnackbar(false)}>
-        <Alert onClose={() => setOpenSnackbar(false)} severity="warning" sx={{ width: "100%" }}>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={() => setOpenSnackbar(false)}
+      >
+        <Alert
+          onClose={() => setOpenSnackbar(false)}
+          severity="warning"
+          sx={{ width: "100%" }}
+        >
           {SnackbarMessage}
         </Alert>
       </Snackbar>

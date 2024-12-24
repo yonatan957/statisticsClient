@@ -36,7 +36,7 @@ export default function GroupYears({mode}:props) {
     if (selectedGroup) {
       try {
         const response = await fetch(
-          `${
+  `        ${
             import.meta.env.VITE_BASE_URL
           }/api/relationships/deadliest-regions?groupName=${selectedGroup}&amount=${amount}`
         );
