@@ -25,42 +25,42 @@ const Home = ({mode}:props) => {
     {
       to: "/yearCharts",
       alt: "פיגועים במהלך השנים",
-      image: "../../public/weapons.webp",
+      image: "/weapons.webp",  // קישור מוחלט לתמונה
       title: "פיגועים במהלך השנים",
       description: "הצגת נתונים לגבי מספר הפיגועים בעולם במהלך השנים האחרונות."
     },
     {
       to: "/attackTypes",
       alt: "מגמות ניתוח",
-      image: "../../public/bludyDiaGram.webp",
+      image: "/bludyDiaGram.webp",
       title: "מגמות ניתוח",
       description: "ניתוח מגמות וסטטיסטיקות מתוך הפיגועים, כולל סוגי הפיגועים."
     },
     {
       to: "/countryAttacks",
       alt: "מגמות ברחבי העולם",
-      image: "../../public/6b31379d-ce60-4331-b56a-bb4fa347c565.webp",
+      image: "/6b31379d-ce60-4331-b56a-bb4fa347c565.webp",
       title: "מגמות ברחבי העולם",
       description: "סטטיסטיקות פיגועים לפי מיקומים בעולם: ניתוח גלובלי והשפעות אזוריות"
     },
     {
       to: "/yearGroups",
       alt: "פעילות ארגוני טרור לאורך השנים",
-      image: "../../public/yearGroups.webp",
+      image: "/yearGroups.webp",
       title: "פעילות ארגוני טרור לאורך השנים",
       description: "הצגת נתונים לגבי מספר הפיגועים של קבוצות בעולם במהלך השנים האחרונות."
     },
     {
       to: "/countryGroups",
       alt: "ארגוני הטרור הקטלניים ביותר",
-      image: "../../public/countryGroupMap.webp",
+      image: "/countryGroupMap.webp",
       title: "ארגוני הטרור הקטלניים ביותר",
       description: "הצגת נתונים לגבי מספר ההרוגים ופצועים של קבוצות במדינות ספציפיות במהלך השנים האחרונות."
     },
     {
       to: "/groupCountries",
       alt: "אזורי השליטה של ארגוני טרור",
-      image: "../../public/army.png",
+      image: "/army.png",
       title: "אזורי השליטה של ארגוני טרור",
       description: "הצגת נתונים על אזורים בהם לארגוני טרור מסויימים יש הכי הרבה כוח."
     }
@@ -122,7 +122,7 @@ const Home = ({mode}:props) => {
                 sx={{ filter : mode === "dark" ? "brightness(0.7)" : "brightness(1)"}}
                 component="img"
                 height="300"
-                image= '../../public/freeSearch.webp'
+                image= './freeSearch.webp'
               />
               <CardContent>
                 <Typography variant="h6" gutterBottom>
