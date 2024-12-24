@@ -1,7 +1,6 @@
-import {Alert,Box, Button, CircularProgress, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Snackbar, Stack, TextField, Typography,} from "@mui/material";
+import {Alert,Box, Button,  FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Snackbar, TextField, Typography,} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { socket } from "../../main";
-import OpenLayersMap from "./OpenLayersMap";
 import OpenLayersMapV2 from "./OpenLayersMapV2";
 
 interface IgroupCountries {
@@ -16,7 +15,6 @@ interface props{
 }
 export default function GroupYears({mode}:props) {
   const [groups, setGroups] = useState<string[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
   const [selectedGroup, setSelectedGroup] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -36,7 +34,6 @@ export default function GroupYears({mode}:props) {
 
   const fetchData = async () => {
     if (selectedGroup) {
-      setLoading(true);
       try {
         const response = await fetch(
           `${
@@ -47,8 +44,6 @@ export default function GroupYears({mode}:props) {
         setData(data);
       } catch (error) {
         console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
       }
     }
   };
@@ -62,7 +57,6 @@ export default function GroupYears({mode}:props) {
     }
   };
   const fetchGroups = async (searchTerm: string) => {
-    setLoading(true);
     setSelectedGroup("");
     try {
       if (!searchTerm) {
@@ -81,8 +75,6 @@ export default function GroupYears({mode}:props) {
       setGroups(filteredGroups);
     } catch (error) {
       console.error("Error fetching data:", error);
-    } finally {
-      setLoading(false);
     }
   };
   useEffect(() => {
@@ -150,7 +142,7 @@ export default function GroupYears({mode}:props) {
       </form>
 
       <Box sx={{ marginTop: 4, width: "100%", height: "50vh", boxShadow: "0 0 10px rgba(0, 0, 0, 0.3)" }}>
-        <OpenLayersMapV2 setEvent={setItem} markers={data.map((data) => ({ location: [data.lng, data.lat], info: data}))} />
+        <OpenLayersMapV2 mode={mode} setEvent={setItem} markers={data.map((data) => ({ location: [data.lng, data.lat], info: data}))} />
       </Box>
       <Snackbar
         open={openSnackbar}

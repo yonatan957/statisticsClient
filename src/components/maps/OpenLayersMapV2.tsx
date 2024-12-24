@@ -15,13 +15,14 @@ export interface Marker<T> {
   info: T
 }
 export interface MapComponentProps<T> {
+  mode: "light" | "dark"
   markers: Marker<T>[];
   setEvent: (event: T)=> void
   setLat?: (lat: number) => void | null;
   setLng?: (lng: number) => void | null;
 }
 
-export default function OpenLayersMapV2<T>({ markers, setEvent, setLat, setLng }: MapComponentProps<T>) {
+export default function OpenLayersMapV2<T>({ markers, setEvent, setLat, setLng,mode }: MapComponentProps<T>) {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const popupRef = useRef<HTMLDivElement | null>(null);
   const [map, setMap] = useState<Map | null>(null);
@@ -87,7 +88,7 @@ export default function OpenLayersMapV2<T>({ markers, setEvent, setLat, setLng }
     });
   }, [markers]);
   return (
-    <Box className="map-container" sx={{ position: 'relative', width: '100%', height: '100%' }}>
+    <Box className="map-container" sx={{filter:mode === 'light' ? '' : 'brightness(0.5)' , position: 'relative', width: '100%', height: '100%' }}>
       <Box
         ref={mapRef}
         style={{

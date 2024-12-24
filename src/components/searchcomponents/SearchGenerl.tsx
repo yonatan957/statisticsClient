@@ -5,7 +5,10 @@ import EventCard from "./EventCard";
 import OpenLayersMapV2 from "../maps/OpenLayersMapV2";
 import { IEvent } from "../Types/event";
 
-export default function SearchGenerl() {
+interface props{
+    mode: "light" | "dark"
+}
+export default function SearchGenerl({mode}: props) {
     const [searchText, setSearchText] = useState('');
     const [event, setEvent] = useState<IEvent | null>(null);
     const [data, setData] = useState<IEvent[]>([]);
@@ -40,7 +43,7 @@ export default function SearchGenerl() {
       <Box className="ltr-box" sx={{height: "100vh",gap: 5, maxWidth: "100%", margin: "100px auto", padding: 2 ,display: "flex", flexDirection: "column", alignItems: "center"}}>
             <SearchBar setSearchText={setSearchText}></SearchBar>
             <Box sx={{ width: '200%' , zIndex: 999, height: "50vh" , boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)'}}>
-                <OpenLayersMapV2 markers={data.filter((event) => event.latitude && event.longitude).map((event) => ({location: [(event.longitude as number), (event.latitude as number)], info: event}))} setEvent={setEvent}></OpenLayersMapV2>      
+                <OpenLayersMapV2 mode={mode} markers={data.filter((event) => event.latitude && event.longitude).map((event) => ({location: [(event.longitude as number), (event.latitude as number)], info: event}))} setEvent={setEvent}></OpenLayersMapV2>      
             </Box>
             { event && <Box sx={{ width: '100%', position: "absolute", top: "75%", left: "50%", transform: "translate(-50%, -50%)" }}>
                 { event && <EventCard event={event} ></EventCard>}
